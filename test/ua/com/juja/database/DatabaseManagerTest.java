@@ -1,4 +1,4 @@
-package ua.com.juja;
+package ua.com.juja.database;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,15 +7,17 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
+public abstract class DatabaseManagerTest {
 
-public class DatabaseManagerTest {
     private DatabaseManager manager;
 
     @Before
     public void setup() {
-        manager = new DatabaseManager();
+        manager = getDatabaseManager();
         manager.connect("SQLCMD", "postgres", "buh1762");
     }
+
+    public abstract DatabaseManager getDatabaseManager();
 
     @Test
     public void testGetAllTableNames() {

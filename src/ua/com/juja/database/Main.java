@@ -1,4 +1,4 @@
-package ua.com.juja;
+package ua.com.juja.database;
 
 import java.sql.*;
 import java.util.Random;

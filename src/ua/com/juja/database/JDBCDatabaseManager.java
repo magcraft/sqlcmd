@@ -1,4 +1,4 @@
-package ua.com.juja;
+package ua.com.juja.database;
 
 import java.sql.*;
 import java.util.Arrays;
@@ -6,55 +6,11 @@ import java.util.Arrays;
 /**
  * Created by magcraft on 19/05/2017.
  */
-public class DatabaseManager {
+public class JDBCDatabaseManager implements DatabaseManager {
+
     private Connection connection;
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        //connect to PostgreSQL
-        String database = "SQLCMD";
-        String user = "postgres";
-        String password = "buh1762";
-
-        DatabaseManager manager = new DatabaseManager();
-        manager.connect(database, user, password);
-
-        Connection connection = manager.getConnection(database, user, password);
-
-        //DELETE
-        manager.clear("users");
-
-        //Insert add a row
-        DataSet data = new DataSet();
-        data.put("id", 9);
-        data.put("name", "Pupkin");
-        data.put("pass", "password");
-        manager.create("users", data);
-//        Statement stmt = connection.createStatement();
-//        stmt.executeUpdate("INSERT INTO public.users (name, pass)"+
-//                "VALUES ('from java code', 'zxc')");
-//        stmt.close();
-
-
-
-        //update
-        DataSet newData = new DataSet();
-        newData.put("id", 9);
-        newData.put("name", "Pupkina");
-        newData.put("pass", "password_@_1");
-        manager.update("users",9, newData);
-
-        //SELECT
-        String tableName = "users";
-        DataSet[] result = manager.getTableData(tableName);
-        System.out.println(Arrays.toString(result));
-
-        //table names
-        String[] tables = manager.getTableNames();
-        System.out.println(Arrays.toString(tables));
-
-        connection.close();
-    }
-
+    @Override
     public DataSet[] getTableData(String tableName) {
         try {
             int size = getSize(tableName);
@@ -94,11 +50,28 @@ public class DatabaseManager {
         }
     }
 
-    public String[] getTableNames() {
+    private int getCountTables() {
         try {
             Statement stmt = connection.createStatement();
+            ResultSet rsCountTables = stmt.executeQuery("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE';");
+            rsCountTables.next();
+            int countTables = rsCountTables.getInt(1);
+            rsCountTables.close();
+            stmt.close();
+            return countTables;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    @Override
+    public String[] getTableNames() {
+        try {
+            int countTables = getCountTables();
+            Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE'");
-            String[] tables = new String[50];
+            String[] tables = new String[countTables];
             int index = 0;
             while (rs.next()) {
                 tables[index++] = rs.getString("table_name");
@@ -113,10 +86,7 @@ public class DatabaseManager {
         }
     }
 
-    private Connection getConnection(String database, String user, String password) {
-        return connection;
-    }
-
+    @Override
     public void connect(String database, String user, String password) {
         try {
             Class.forName("org.postgresql.Driver");
@@ -136,6 +106,7 @@ public class DatabaseManager {
         }
     }
 
+    @Override
     public void clear(String tableName) {
         try {
             Statement stmt = connection.createStatement();
@@ -148,6 +119,7 @@ public class DatabaseManager {
         }
     }
 
+    @Override
     public void create(String tableName, DataSet input) {
         try {
             Statement stmt = connection.createStatement();
@@ -166,15 +138,12 @@ public class DatabaseManager {
         }
     }
 
+    @Override
     public void update(String tableName, int id, DataSet input) {
-//        PreparedStatement ps = connection.prepareStatement("UPDATE public.users SET pass = ? WHERE id > 2");
-//        String pass = "@_" + new Random().nextInt();
-//        ps.setString(1, pass);
-//        ps.executeUpdate();
-//        ps.close();
         try {
             String updateCondition = getNamesFromated(input, "%s = ?,");
 
+//          PreparedStatement ps = connection.prepareStatement("UPDATE public.users SET pass = ? WHERE id > 2");
             PreparedStatement stmt = connection.prepareStatement("UPDATE public." + tableName + " SET " + updateCondition +
                     " WHERE id = ?");
             int index = 1;
