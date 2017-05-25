@@ -1,4 +1,4 @@
-package ua.com.juja.database;
+package ua.com.juja.model;
 
 import java.util.Arrays;
 
@@ -21,6 +21,7 @@ public class DataSet {
             return value;
         }
     }
+
     public Data[] data = new Data[100]; //Todo remove magic number
     public int freeIndex = 0;
 

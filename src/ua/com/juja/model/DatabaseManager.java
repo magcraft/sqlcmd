@@ -1,4 +1,4 @@
-package ua.com.juja.database;
+package ua.com.juja.model;
 
 public interface DatabaseManager {
 
@@ -6,7 +6,7 @@ public interface DatabaseManager {
 
     String[] getTableNames();
 
-    void connect(String database, String user, String password);
+    void connect(String databaseName, String userName, String password);
 
     void clear(String tableName);
 

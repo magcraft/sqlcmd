@@ -1,4 +1,4 @@
-package ua.com.juja.database;
+package ua.com.juja.model;
 
 public class InMemoryDatabaseManagerTest extends DatabaseManagerTest {
 

@@ -1,4 +1,4 @@
-package ua.com.juja.database;
+package ua.com.juja.model;
 
 import java.util.Arrays;
 
@@ -19,7 +19,7 @@ public class InMemoryDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public void connect(String database, String user, String password) {
+    public void connect(String databaseName, String userName, String password) {
         //do nothing because we use a DataSet
     }
 
