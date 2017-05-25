@@ -3,6 +3,8 @@ package ua.com.juja.controller;
 import ua.com.juja.model.DatabaseManager;
 import ua.com.juja.view.View;
 
+import java.util.Arrays;
+
 public class MainController {
 
     private View view;
@@ -15,6 +17,33 @@ public class MainController {
 
     public void run() {
         connectToDb();
+        while (true) {
+            view.write("Get your command or 'help' for information:");
+            String command = view.read();
+            if (command.equals("list")) {
+                doList();
+            } else if (command.equals("help")) {
+                doHelp();
+            } else {
+                view.write("command '" + command + "' does not exist");
+            }
+
+        }
+    }
+
+    private void doHelp() {
+        view.write("Command list:");
+        view.write("\t- list:");
+        view.write("\t\t * if you need to get list of tables in the database");
+        view.write("\t- help");
+        view.write("\t\t * for this information message");
+
+    }
+
+    private void doList() {
+        String[] tableNames = manager.getTableNames();
+        String message = Arrays.toString(tableNames);
+        view.write(message);
     }
 
     private void connectToDb() {
