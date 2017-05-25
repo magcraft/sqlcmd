@@ -41,9 +41,10 @@ public class MainController {
     }
 
     private void printError(Exception e) {
-        String message = e.getMessage();
-        if (e.getCause() != null) {
-            message += " " + e.getCause().getMessage();
+        String message = /*e.getClass().getSimpleName() + ": " +*/ e.getMessage();
+        Throwable cause = e.getCause();
+        if (cause != null) {
+            message += " " + /*cause.getClass().getSimpleName() + ": " +*/ e.getCause().getMessage();
         }
         view.write("Connection failed: " + message);
         view.write("Try again.");
