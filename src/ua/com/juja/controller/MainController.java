@@ -1,5 +1,6 @@
 package ua.com.juja.controller;
 
+import ua.com.juja.model.DataSet;
 import ua.com.juja.model.DatabaseManager;
 import ua.com.juja.view.View;
 
@@ -24,6 +25,10 @@ public class MainController {
                 doList();
             } else if (command.equals("help")) {
                 doHelp();
+            } else if (command.equals("exit")) {
+                doExit();
+            } else if (command.startsWith("find|")) {
+                doFind(command);
             } else {
                 view.write("command '" + command + "' does not exist");
             }
@@ -31,12 +36,60 @@ public class MainController {
         }
     }
 
+    private void doFind(String command) {
+        String[] data = command.split("\\|");
+        if (data.length < 2) {
+            view.write("command find reqaures a parameter after '|' table name");
+            return;
+        }
+        String tableName = data[1];
+        if (tableName != null) {
+            DataSet[] tableContents = manager.getTableData(tableName);
+            String[] tableColumns = manager.getTableColumns(tableName);
+            printHeader(tableColumns);
+            printTable(tableContents);
+
+        }
+    }
+
+    private void printTable(DataSet[] tableContents) {
+        for (DataSet row : tableContents) {
+            printRow(row);
+        }
+    }
+
+    private void printRow(DataSet row) {
+        Object[] values = row.getValues();
+        String result = "|";
+        for (Object value : values) {
+            result += value.toString() + "|";
+        }
+        view.write(result);
+    }
+
+    private void printHeader(String[] tableColumns) {
+        String result = "|";
+        for (String name : tableColumns) {
+            result += name + "|";
+        }
+        view.write(result);
+    }
+
+    private void doExit() {
+        view.write("Good luck");
+        System.exit(0);
+    }
+
     private void doHelp() {
         view.write("Command list:");
+        view.write("\t- exit:");
+        view.write("\t\t * close the application.");
+        view.write("\t- find|Table Name");
+        view.write("\t\t * show content of the table. Which name is Table Name");
         view.write("\t- list:");
-        view.write("\t\t * if you need to get list of tables in the database");
+        view.write("\t\t * if you need to get list of tables in the database.");
         view.write("\t- help");
-        view.write("\t\t * for this information message");
+        view.write("\t\t * for this information message.");
 
     }
 

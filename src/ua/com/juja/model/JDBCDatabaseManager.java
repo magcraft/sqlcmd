@@ -161,6 +161,42 @@ public class JDBCDatabaseManager implements DatabaseManager {
         }
     }
 
+    @Override
+    public String[] getTableColumns(String tableName) {
+        try {
+            int countColumns = getCountColumns(tableName);
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT column_name FROM information_schema.columns WHERE table_schema = 'public' AND table_name = '" + tableName + "' ORDER BY ordinal_position");
+            String[] tables = new String[countColumns];
+            int index = 0;
+            while (rs.next()) {
+                tables[index++] = rs.getString("column_name");
+            }
+            tables = Arrays.copyOf(tables, index, String[].class);
+            rs.close();
+            stmt.close();
+            return tables;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new String[0];
+        }
+    }
+
+    private int getCountColumns(String tableName) {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rscc = stmt.executeQuery("SELECT COUNT(*) FROM information_schema.columns WHERE table_schema = 'public' AND table_name = '" + tableName + "'");
+            rscc.next();
+            int countColumns = rscc.getInt(1);
+            rscc.close();
+            stmt.close();
+            return countColumns;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     private String getNamesFromated(DataSet input, String format) {
         String updateCondition = "";
         for (String name : input.getNames()) {

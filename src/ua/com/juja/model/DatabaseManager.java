@@ -13,4 +13,6 @@ public interface DatabaseManager {
     void create(String tableName, DataSet input);
 
     void update(String tableName, int id, DataSet input);
+
+    String[] getTableColumns(String tableName);
 }
