@@ -1,19 +1,27 @@
 package ua.com.juja.controller;
 
+import ua.com.juja.controller.command.Command;
+import ua.com.juja.controller.command.Exit;
+import ua.com.juja.controller.command.Help;
+import ua.com.juja.controller.command.List;
 import ua.com.juja.model.DataSet;
 import ua.com.juja.model.DatabaseManager;
 import ua.com.juja.view.View;
 
-import java.util.Arrays;
-
 public class MainController {
 
+    private Command[] commands;
     private View view;
     private DatabaseManager manager;
 
     public MainController(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
+        this.commands = new Command[] {
+                new Exit(view),
+                new Help(view),
+                new List(view, manager)
+        };
     }
 
     public void run() {
@@ -21,12 +29,12 @@ public class MainController {
         while (true) {
             view.write("Get your command or 'help' for information:");
             String command = view.read();
-            if (command.equals("list")) {
-                doList();
-            } else if (command.equals("help")) {
-                doHelp();
-            } else if (command.equals("exit")) {
-                doExit();
+            if (commands[2].canProcess(command)) {
+                commands[2].process(command);
+            } else if (commands[1].canProcess(command)) {
+                commands[1].process(command);
+            } else if (commands[0].canProcess(command)) {
+                commands[0].process(command);
             } else if (command.startsWith("find|")) {
                 doFind(command);
             } else {
@@ -73,30 +81,6 @@ public class MainController {
             result += name + "|";
         }
         view.write(result);
-    }
-
-    private void doExit() {
-        view.write("Good luck");
-        System.exit(0);
-    }
-
-    private void doHelp() {
-        view.write("Command list:");
-        view.write("\t- exit:");
-        view.write("\t\t * close the application.");
-        view.write("\t- find|Table Name");
-        view.write("\t\t * show content of the table. Which name is Table Name");
-        view.write("\t- list:");
-        view.write("\t\t * if you need to get list of tables in the database.");
-        view.write("\t- help");
-        view.write("\t\t * for this information message.");
-
-    }
-
-    private void doList() {
-        String[] tableNames = manager.getTableNames();
-        String message = Arrays.toString(tableNames);
-        view.write(message);
     }
 
     private void connectToDb() {
