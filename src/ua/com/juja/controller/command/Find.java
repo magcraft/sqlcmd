@@ -23,7 +23,7 @@ public class Find implements Command {
     public void process(String command) {
         String[] data = command.split("\\|");
         if (data.length < 2) {
-            view.write("command find reqaures a parameter after '|' table name");
+            view.write("command find requires a parameter after '|' table name");
             return;
         }
         String tableName = data[1];

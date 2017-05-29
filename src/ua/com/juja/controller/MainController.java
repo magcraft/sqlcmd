@@ -17,7 +17,8 @@ public class MainController {
                 new Exit(view),
                 new Help(view),
                 new List(manager, view),
-                new Find(manager, view)
+                new Find(manager, view),
+                new Unsupported(view)
         };
     }
 
@@ -25,19 +26,14 @@ public class MainController {
         connectToDb();
         while (true) {
             view.write("Get your command or 'help' for information:");
-            String command = view.read();
-            if (commands[2].canProcess(command)) {
-                commands[2].process(command);
-            } else if (commands[1].canProcess(command)) {
-                commands[1].process(command);
-            } else if (commands[0].canProcess(command)) {
-                commands[0].process(command);
-            } else if (commands[3].canProcess(command)) {
-                commands[3].process(command);
-            } else {
-                view.write("command '" + command + "' does not exist");
-            }
+            String input = view.read();
 
+            for (Command command : commands) {
+                if (command.canProcess(input)) {
+                    command.process(input);
+                    break;
+                }
+            }
         }
     }
 
