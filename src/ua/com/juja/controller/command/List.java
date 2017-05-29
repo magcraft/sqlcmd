@@ -7,12 +7,12 @@ import java.util.Arrays;
 
 public class List implements Command {
 
-    private View view;
     private DatabaseManager manager;
+    private View view;
 
-    public List(View view, DatabaseManager manager) {
-        this.view = view;
+    public List(DatabaseManager manager, View view) {
         this.manager = manager;
+        this.view = view;
     }
 
     @Override

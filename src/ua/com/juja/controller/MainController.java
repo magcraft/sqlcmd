@@ -1,10 +1,6 @@
 package ua.com.juja.controller;
 
-import ua.com.juja.controller.command.Command;
-import ua.com.juja.controller.command.Exit;
-import ua.com.juja.controller.command.Help;
-import ua.com.juja.controller.command.List;
-import ua.com.juja.model.DataSet;
+import ua.com.juja.controller.command.*;
 import ua.com.juja.model.DatabaseManager;
 import ua.com.juja.view.View;
 
@@ -20,7 +16,8 @@ public class MainController {
         this.commands = new Command[] {
                 new Exit(view),
                 new Help(view),
-                new List(view, manager)
+                new List(manager, view),
+                new Find(manager, view)
         };
     }
 
@@ -35,52 +32,13 @@ public class MainController {
                 commands[1].process(command);
             } else if (commands[0].canProcess(command)) {
                 commands[0].process(command);
-            } else if (command.startsWith("find|")) {
-                doFind(command);
+            } else if (commands[3].canProcess(command)) {
+                commands[3].process(command);
             } else {
                 view.write("command '" + command + "' does not exist");
             }
 
         }
-    }
-
-    private void doFind(String command) {
-        String[] data = command.split("\\|");
-        if (data.length < 2) {
-            view.write("command find reqaures a parameter after '|' table name");
-            return;
-        }
-        String tableName = data[1];
-        if (tableName != null) {
-            DataSet[] tableContents = manager.getTableData(tableName);
-            String[] tableColumns = manager.getTableColumns(tableName);
-            printHeader(tableColumns);
-            printTable(tableContents);
-
-        }
-    }
-
-    private void printTable(DataSet[] tableContents) {
-        for (DataSet row : tableContents) {
-            printRow(row);
-        }
-    }
-
-    private void printRow(DataSet row) {
-        Object[] values = row.getValues();
-        String result = "|";
-        for (Object value : values) {
-            result += value.toString() + "|";
-        }
-        view.write(result);
-    }
-
-    private void printHeader(String[] tableColumns) {
-        String result = "|";
-        for (String name : tableColumns) {
-            result += name + "|";
-        }
-        view.write(result);
     }
 
     private void connectToDb() {
