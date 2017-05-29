@@ -19,6 +19,9 @@ public class Help implements Command {
     public void process(String command) {
         view.write("Command list:");
 
+        view.write("\t- connect to the database.");
+        view.write(String.format("\t\t * Enter command 'connect|dataBase|userName|password' please!"));
+
         view.write("\t- exit:");
         view.write("\t\t * close the application.");
 

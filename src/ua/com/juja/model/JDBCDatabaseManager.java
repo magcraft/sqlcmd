@@ -182,6 +182,11 @@ public class JDBCDatabaseManager implements DatabaseManager {
         }
     }
 
+    @Override
+    public boolean isConnected() {
+        return connection != null;
+    }
+
     private int getCountColumns(String tableName) {
         try {
             Statement stmt = connection.createStatement();
