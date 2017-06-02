@@ -5,6 +5,7 @@ import ua.com.juja.view.View;
 
 public class Connect implements Command {
 
+    private final String COMMAND_SAMPLE = "connect|DatabaseName|UserName|Password";
     private DatabaseManager manager;
     private View view;
 
@@ -21,18 +22,20 @@ public class Connect implements Command {
     @Override
     public void process(String command) {
         try {
+            int count = COMMAND_SAMPLE.split("\\|").length;
             String[] data = command.split("[|]");
-            if (data.length != 4) {
-                throw new IllegalArgumentException("Wrong arguments, expected 4, separated by symbol '|' but was " + data.length);
+            if (data.length != count) {
+                throw new IllegalArgumentException(String.format("Wrong arguments, " +
+                        "expected %s, separated by symbol '|' but was: %s", count, data.length));
             }
             String databaseName = data[1];
             String userName = data[2];
             String password = data[3];
             manager.connect(databaseName, userName, password);
+            view.write("You've succesfully connected!");
         } catch (Exception e) {
             printError(e);
         }
-        view.write("You've succesfully connected!");
     }
 
     private void printError(Exception e) {

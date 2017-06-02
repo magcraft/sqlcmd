@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public abstract class DatabaseManagerTest {
 
@@ -80,5 +81,10 @@ public abstract class DatabaseManagerTest {
         DataSet user = users[0];
         assertEquals("[id, name, pass]", Arrays.toString(user.getNames()));
         assertEquals("[9, Pupkina, password_@_1]", Arrays.toString(user.getValues()));
+    }
+
+    @Test
+    public void testIsConnected() {
+        assertTrue(manager.isConnected());
     }
 }
