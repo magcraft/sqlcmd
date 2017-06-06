@@ -5,7 +5,7 @@ import ua.com.juja.view.View;
 
 public class Connect implements Command {
 
-    private final String COMMAND_SAMPLE = "connect|DatabaseName|UserName|Password";
+    private static String COMMAND_SAMPLE = "connect|DatabaseName|UserName|Password";
     private DatabaseManager manager;
     private View view;
 

@@ -23,13 +23,21 @@ public class MainController {
     }
 
     public void run() {
+        try {
+            doWork();
+        } catch (ExitException e) {
+            //do nothing
+        }
+    }
+
+    private void doWork() {
         view.write("Welcome back!");
         view.write("If you're going to connect to the database.");
         view.write("Enter " + "'" + "connect|dataBase|userName|password" + "'" + " please!");
 
         while (true) {
             String input = view.read();
-            if (input.isEmpty()) {
+            if (input == null) {
                 new Exit(view).process(input);
             }
             for (Command command : commands) {
