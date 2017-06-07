@@ -25,8 +25,14 @@ public class Help implements Command {
         view.write("\t- exit:");
         view.write("\t\t * close the application.");
 
-        view.write("\t- find|Table Name");
-        view.write("\t\t * show content of the table. Which name is Table Name");
+        view.write("\t- find|TableName");
+        view.write("\t\t * show content of the table. Which name is TableName");
+
+        view.write("\t- clear|TableName");
+        view.write("\t\t * clear content of the table. Which name is TableName");
+
+        view.write("\t- create|TableName|column1|value1|...|columnN|valueN");
+        view.write("\t\t * create new row in the table. Which name is TableName");
 
         view.write("\t- list:");
         view.write("\t\t * if you need to get list of tables in the database.");

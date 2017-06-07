@@ -50,8 +50,12 @@ public class IntegrationTest {
                 "\t\t * Enter command 'connect|dataBase|userName|password' please!\n" +
                 "\t- exit:\n" +
                 "\t\t * close the application.\n" +
-                "\t- find|Table Name\n" +
-                "\t\t * show content of the table. Which name is Table Name\n" +
+                "\t- find|TableName\n" +
+                "\t\t * show content of the table. Which name is TableName\n" +
+                "\t- clear|TableName\n" +
+                "\t\t * clear content of the table. Which name is TableName\n" +
+                "\t- create|TableName|column1|value1|...|columnN|valueN\n" +
+                "\t\t * create new row in the table. Which name is TableName\n" +
                 "\t- list:\n" +
                 "\t\t * if you need to get list of tables in the database.\n" +
                 "\t- help\n" +
@@ -163,6 +167,9 @@ public class IntegrationTest {
     public void testFindAfterConnect() {
         //given
         in.add("connect|SQLCMD|postgres|buh1762");
+        in.add("clear|users");
+        in.add("create|users|id|35|name|Andy|pass|realypass");
+        in.add("create|users|id|36|name|Sandy|pass|ghdgashdfhsdf");
         in.add("find|users");
         in.add("exit");
         //when
@@ -173,8 +180,15 @@ public class IntegrationTest {
                 "Enter 'connect|dataBase|userName|password' please!\n" +
                 "You've succesfully connected!\n" +
                 "Get your command or 'help' for information:\n" +
-                "|id|name|pass|\n" +
-                "|35|Andy|mypassword|\n" +
+                "Table 'users' sucsessfully cleared\n" +
+                "Get your command or 'help' for information:\n" +
+                "A row: '{names: [id, name, pass], values: [35, Andy, realypass]}' was add to the table 'users'\n" +
+                "Get your command or 'help' for information:\n" +
+                "A row: '{names: [id, name, pass], values: [36, Sandy, ghdgashdfhsdf]}' was add to the table 'users'\n" +
+                "Get your command or 'help' for information:\n" +
+                "|id\t|name\t|pass\t|\n" +
+                "|35\t|Andy\t|realypass\t|\n" +
+                "|36\t|Sandy\t|ghdgashdfhsdf\t|\n" +
                 "Get your command or 'help' for information:\n" +
                 "Good luck\n", getData());
     }
@@ -203,4 +217,79 @@ public class IntegrationTest {
                 "Get your command or 'help' for information:\n" +
                 "Good luck\n", getData());
     }
+
+    @Test
+    public void testConnectWithError() {
+        //given
+        in.add("connect|SQLCMD|");
+        in.add("exit");
+        //when
+        Main.main(new String [0]);
+        //then
+        assertEquals("Welcome back!\n" +
+                "If you're going to connect to the database.\n" +
+                "Enter 'connect|dataBase|userName|password' please!\n" +
+                "Connection failed: Wrong arguments, expected 4, separated by symbol '|' but was: 2\n" +
+                "Try again.\n" +
+                "Get your command or 'help' for information:\n" +
+                "Good luck\n", getData());
+    }
+
+    @Test
+    public void testFindWithErrorInCommand() {
+        //given
+        in.add("connect|SQLCMD|postgres|buh1762");
+        in.add("find");
+        in.add("exit");
+        //when
+        Main.main(new String [0]);
+        //then
+        assertEquals("Welcome back!\n" +
+                "If you're going to connect to the database.\n" +
+                "Enter 'connect|dataBase|userName|password' please!\n" +
+                "You've succesfully connected!\n" +
+                "Get your command or 'help' for information:\n" +
+                "command find requires a parameter after '|' table name\n" +
+                "Get your command or 'help' for information:\n" +
+                "Good luck\n", getData());
+    }
+
+    @Test
+    public void testClear() {
+        //given
+        in.add("connect|SQLCMD|postgres|buh1762");
+        in.add("clear|users");
+        in.add("exit");
+        //when
+        Main.main(new String[0]);
+        //then
+        assertEquals("Welcome back!\n" +
+                "If you're going to connect to the database.\n" +
+                "Enter 'connect|dataBase|userName|password' please!\n" +
+                "You've succesfully connected!\n" +
+                "Get your command or 'help' for information:\n" +
+                "Table 'users' sucsessfully cleared\n" +
+                "Get your command or 'help' for information:\n" +
+                "Good luck\n", getData());
+    }
+
+//    @Test
+//    public void testClearWithError() {
+//        //given
+//        in.add("connect|SQLCMD|postgres|buh1762");
+//        in.add("clear|");
+//        in.add("exit");
+//        //when
+//        Main.main(new String[0]);
+//        //then
+//        assertEquals("Welcome back!\n" +
+//                "If you're going to connect to the database.\n" +
+//                "Enter 'connect|dataBase|userName|password' please!\n" +
+//                "You've succesfully connected!\n" +
+//                "Get your command or 'help' for information:\n" +
+//                "Table 'users' sucsessfully cleared\n" +
+//                "Get your command or 'help' for information:\n" +
+//                "Good luck\n", getData());
+//    }
+
 }

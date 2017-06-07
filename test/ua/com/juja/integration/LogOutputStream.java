@@ -12,6 +12,10 @@ public class LogOutputStream extends OutputStream {
         log += String.valueOf((char)b);
     }
 
+    public void write1(String something) throws IOException {
+        log += something;
+    }
+
     public String getData() {
         return log;
     }

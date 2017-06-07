@@ -16,7 +16,7 @@ public class Find implements Command {
 
     @Override
     public boolean canProcess(String command) {
-        return command.startsWith("find|");
+        return command.startsWith("find");
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Find implements Command {
         Object[] values = row.getValues();
         String result = "|";
         for (Object value : values) {
-            result += value.toString() + "|";
+            result += value.toString() + "\t|";
         }
         view.write(result);
     }
@@ -53,7 +53,7 @@ public class Find implements Command {
     private void printHeader(String[] tableColumns) {
         String result = "|";
         for (String name : tableColumns) {
-            result += name + "|";
+            result += name + "\t|";
         }
         view.write(result);
     }
