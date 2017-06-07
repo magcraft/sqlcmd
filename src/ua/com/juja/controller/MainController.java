@@ -11,7 +11,7 @@ public class MainController {
 
     public MainController(View view, DatabaseManager manager) {
         this.view = view;
-        this.commands = new Command[] {
+        this.commands = new Command[]{
                 new Connect(manager, view),
                 new Help(view),
                 new Exit(view),
@@ -35,20 +35,36 @@ public class MainController {
     private void doWork() {
         view.write("Welcome back!");
         view.write("If you're going to connect to the database.");
-        view.write("Enter " + "'" + "connect|dataBase|userName|password" + "'" + " please!");
+        view.write("Enter 'connect|dataBase|userName|password' please!");
 
         while (true) {
             String input = view.read();
-            if (input == null) {
-                new Exit(view).process(input);
-            }
+
             for (Command command : commands) {
-                if (command.canProcess(input)) {
-                    command.process(input);
+                try {
+                    if (command.canProcess(input)) {
+                        command.process(input);
+                        break;
+                    }
+                } catch (Exception e) {
+                    if (e instanceof ExitException) {
+                        throw e;
+                    }
+                    printError(e);
                     break;
                 }
             }
             view.write("Get your command or 'help' for information:");
         }
+    }
+
+    private void printError(Exception e) {
+        String message = /*e.getClass().getSimpleName() + ": " +*/ e.getMessage();
+        Throwable cause = e.getCause();
+        if (cause != null) {
+            message += " " + /*cause.getClass().getSimpleName() + ": " +*/ e.getCause().getMessage();
+        }
+        view.write("Operation failed: " + message);
+        view.write("Try again.");
     }
 }

@@ -26,7 +26,7 @@ public class Create implements Command {
         String tableName = data[1];
         DataSet dataSet = new DataSet();
         if (data.length % 2 != 0) {
-            throw new IllegalArgumentException(String.format("Have to even numbers of arguments 'create|TableName|column1|value1|...|columnN|valueN' but was: '%s'", command));
+            throw new IllegalArgumentException(String.format("There have to even numbers of arguments 'create|TableName|column1|value1|...|columnN|valueN' but was: '%s'", command));
         }
         for (int i = 1; i < (dataLength / 2); i++) {
             String column = data[i * 2];
