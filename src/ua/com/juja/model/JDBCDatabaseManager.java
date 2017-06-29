@@ -12,10 +12,10 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public DataSet[] getTableData(String tableName) {
-        try {
-            int size = getSize(tableName);
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM public." + tableName);
+        int size = getSize(tableName);
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM public." + tableName))
+        {
             ResultSetMetaData rsmd = rs.getMetaData();
             DataSet[] result = new DataSet[size];
             int index = 0;
@@ -26,8 +26,6 @@ public class JDBCDatabaseManager implements DatabaseManager {
                     dataSet.put(rsmd.getColumnName(i), rs.getObject(i));
                 }
             }
-            rs.close();
-            stmt.close();
             return result;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -36,12 +34,11 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     private int getSize(String tableName) {
-        try {
-            Statement stmt = connection.createStatement();
-            ResultSet rsCount = stmt.executeQuery("SELECT COUNT(*) FROM public." + tableName);
+        try (Statement stmt = connection.createStatement();
+             ResultSet rsCount = stmt.executeQuery("SELECT COUNT(*) FROM public." + tableName))
+        {
             rsCount.next();
             int size = rsCount.getInt(1);
-            rsCount.close();
             return size;
         } catch (SQLException e) {
             System.out.println("Warning problems with getSize " + tableName + " method!");
@@ -51,13 +48,11 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     private int getCountTables() {
-        try {
-            Statement stmt = connection.createStatement();
-            ResultSet rsCountTables = stmt.executeQuery("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE';");
+        try (Statement stmt = connection.createStatement();
+             ResultSet rsCountTables = stmt.executeQuery("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE';"))
+        {
             rsCountTables.next();
             int countTables = rsCountTables.getInt(1);
-            rsCountTables.close();
-            stmt.close();
             return countTables;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,18 +62,17 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public String[] getTableNames() {
-        try {
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE'"))
+        {
             int countTables = getCountTables();
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE'");
+
             String[] tables = new String[countTables];
             int index = 0;
             while (rs.next()) {
                 tables[index++] = rs.getString("table_name");
             }
             tables = Arrays.copyOf(tables, index, String[].class);
-            rs.close();
-            stmt.close();
             return tables;
         } catch (SQLException e) {
           e.printStackTrace();
@@ -96,6 +90,9 @@ public class JDBCDatabaseManager implements DatabaseManager {
 //            e.printStackTrace();
         }
         try {
+            if (connection != null) {
+                connection.close();
+            }
             connection = DriverManager.getConnection("jdbc:postgresql://10.211.55.6:5432/" + databaseName, userName,
                     password);
         } catch (SQLException e) {
@@ -109,12 +106,9 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public void clear(String tableName) {
-        try {
-            Statement stmt = connection.createStatement();
+        try (Statement stmt = connection.createStatement()){
             stmt.executeUpdate("DELETE FROM public." + tableName);
 //            stmt.executeUpdate("DELETE FROM public.users WHERE id > 12");
-            stmt.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -122,17 +116,13 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public void create(String tableName, DataSet input) {
-        try {
-            Statement stmt = connection.createStatement();
-            String fieldNames = "";
-            String values = "";
+        String fieldNames = "";
+        String values = "";
+        try (Statement stmt = connection.createStatement()) {
             fieldNames = getNamesFromated(input, "%s,");
             values = getValuesFormated(input, "'%s',");
-
             stmt.executeUpdate("INSERT INTO public." + tableName + " (" + fieldNames + ")"+
                     "VALUES (" + values + ")");
-            stmt.close();
-
         } catch (SQLException e) {
             System.out.println("Create error!");
             e.printStackTrace();
@@ -141,20 +131,16 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public void update(String tableName, int id, DataSet input) {
-        try {
-            String updateCondition = getNamesFromated(input, "%s = ?,");
-
+        String updateCondition = getNamesFromated(input, "%s = ?,");
+        try (PreparedStatement stmt = connection.prepareStatement("UPDATE public." + tableName + " SET " + updateCondition +
+                " WHERE id = ?")) {
 //          PreparedStatement ps = connection.prepareStatement("UPDATE public.users SET pass = ? WHERE id > 2");
-            PreparedStatement stmt = connection.prepareStatement("UPDATE public." + tableName + " SET " + updateCondition +
-                    " WHERE id = ?");
             int index = 1;
             for (Object value : input.getValues()) {
                 stmt.setObject(index++, value);
             }
             stmt.setInt(index, id);
             stmt.executeUpdate();
-            stmt.close();
-
         } catch (SQLException e) {
             System.out.println("Update error!");
             e.printStackTrace();
@@ -163,18 +149,17 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public String[] getTableColumns(String tableName) {
-        try {
-            int countColumns = getCountColumns(tableName);
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT column_name FROM information_schema.columns WHERE table_schema = 'public' AND table_name = '" + tableName + "' ORDER BY ordinal_position");
+        int countColumns = getCountColumns(tableName);
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT column_name FROM information_schema.columns WHERE table_schema = 'public' AND table_name = '"
+                     + tableName + "' ORDER BY ordinal_position"))
+        {
             String[] tables = new String[countColumns];
             int index = 0;
             while (rs.next()) {
                 tables[index++] = rs.getString("column_name");
             }
             tables = Arrays.copyOf(tables, index, String[].class);
-            rs.close();
-            stmt.close();
             return tables;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -188,13 +173,11 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     private int getCountColumns(String tableName) {
-        try {
-            Statement stmt = connection.createStatement();
-            ResultSet rscc = stmt.executeQuery("SELECT COUNT(*) FROM information_schema.columns WHERE table_schema = 'public' AND table_name = '" + tableName + "'");
+        try (Statement stmt = connection.createStatement();
+             ResultSet rscc = stmt.executeQuery("SELECT COUNT(*) FROM information_schema.columns WHERE table_schema = 'public' AND table_name = '" + tableName + "'"))
+        {
             rscc.next();
             int countColumns = rscc.getInt(1);
-            rscc.close();
-            stmt.close();
             return countColumns;
         } catch (SQLException e) {
             e.printStackTrace();
