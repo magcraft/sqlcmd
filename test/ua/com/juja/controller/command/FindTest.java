@@ -25,6 +25,12 @@ public class FindTest {
         command = new Find(manager, view);
     }
 
+    private void shouldPrint(String expected) {
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        Mockito.verify(view, Mockito.atLeastOnce()).write(captor.capture());
+        assertEquals(expected, captor.getAllValues().toString());
+    }
+
     @Test
     public void testFindWithData() {
         //given
@@ -42,11 +48,9 @@ public class FindTest {
         //when
         command.process("find|users");
         //then
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        Mockito.verify(view, Mockito.atLeastOnce()).write(captor.capture());
-        assertEquals("[|id\t|name\t|pass\t|," +
-                                " |1\t|Victor\t|my_pass\t|," +
-                                " |2\t|Eva\t|-=-=-=-=\t|]", captor.getAllValues().toString());
+        shouldPrint("[|id\t|name\t|pass\t|," +
+                            " |1\t|Victor\t|my_pass\t|," +
+                            " |2\t|Eva\t|-=-=-=-=\t|]");
     }
 
     @Test
@@ -58,9 +62,7 @@ public class FindTest {
         //when
         command.process("find|users");
         //then
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        Mockito.verify(view, Mockito.atLeastOnce()).write(captor.capture());
-        assertEquals("[|id\t|name\t|pass\t|]", captor.getAllValues().toString());
+        shouldPrint("[|id\t|name\t|pass\t|]");
     }
 
     @Test
