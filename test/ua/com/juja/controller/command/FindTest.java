@@ -65,6 +65,35 @@ public class FindTest {
     }
 
     @Test
+    public void testFindWithoutDataWithOneColumn() {
+        //given
+        Mockito.when(manager.getTableColumns("test")).thenReturn(new String[] {"id"});
+        Mockito.when(manager.getTableData("test")).thenReturn(new DataSet[0]);
+        //when
+        command.process("find|test");
+        //then
+        shouldPrint("[|id\t|]");
+    }
+
+    @Test
+    public void testFindWithDataOneColumn() {
+        //given
+        Mockito.when(manager.getTableColumns("test")).thenReturn(new String[] {"id"});
+        DataSet userOne = new DataSet();
+        userOne.put("id", 1);
+        DataSet userTwo = new DataSet();
+        userTwo.put("id", 2);
+        DataSet[] data = new DataSet[] {userOne, userTwo};
+        Mockito.when(manager.getTableData("test")).thenReturn(data);
+        //when
+        command.process("find|test");
+        //then
+        shouldPrint("[|id\t|," +
+                " |1\t|," +
+                " |2\t|]");
+    }
+
+    @Test
     public void testCanProcessFindString() {
         //when
         boolean canProcess = command.canProcess("find|users");
