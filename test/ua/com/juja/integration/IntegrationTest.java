@@ -239,7 +239,7 @@ public class IntegrationTest {
     public void testFindWithErrorInCommand() {
         //given
         in.add("connect|SQLCMD|postgres|buh1762");
-        in.add("find");
+        in.add("find|");
         in.add("exit");
         //when
         Main.main(new String [0]);
@@ -249,7 +249,7 @@ public class IntegrationTest {
                 "Enter 'connect|dataBase|userName|password' please!\n" +
                 "You've succesfully connected!\n" +
                 "Get your command or 'help' for information:\n" +
-                "command find requires a parameter after '|' table name\n" +
+                "command find requires a parameter after '|' table name, like a find|tableName\n" +
                 "Get your command or 'help' for information:\n" +
                 "Good luck\n", getData());
     }

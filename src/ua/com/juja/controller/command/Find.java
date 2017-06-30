@@ -16,14 +16,14 @@ public class Find implements Command {
 
     @Override
     public boolean canProcess(String command) {
-        return command.startsWith("find");
+        return command.startsWith("find|");
     }
 
     @Override
     public void process(String command) {
         String[] data = command.split("\\|");
-        if (data.length < 2) {
-            view.write("command find requires a parameter after '|' table name");
+        if (data.length != 2) {
+            view.write("command find requires a parameter after '|' table name, like a find|tableName");
             return;
         }
         String tableName = data[1];

@@ -57,8 +57,7 @@ public class FindTest {
     public void testFindWithoutData() {
         //given
         Mockito.when(manager.getTableColumns("users")).thenReturn(new String[] {"id", "name", "pass"});
-        DataSet[] data = new DataSet[0];
-        Mockito.when(manager.getTableData("users")).thenReturn(data);
+        Mockito.when(manager.getTableData("users")).thenReturn(new DataSet[0]);
         //when
         command.process("find|users");
         //then
@@ -76,7 +75,7 @@ public class FindTest {
     @Test
     public void testCanNotProcessNotFindString() {
         //when
-        boolean canProcess = command.canProcess("finsdddc");
+        boolean canProcess = command.canProcess("find");
         //then
         assertFalse(canProcess);
     }
@@ -88,4 +87,15 @@ public class FindTest {
         //then
         assertFalse(canProcess);
     }
+
+    @Test
+    public void testCanNotProcessFindWithUnexpectedParametersString() {
+        //when
+        command.process("find|users|qwe");
+
+        //then
+        shouldPrint("[command find requires a parameter after '|' table name, like a find|tableName]");
+//        assertFalse(canProcess);
+    }
+
 }
