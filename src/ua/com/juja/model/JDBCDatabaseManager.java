@@ -93,7 +93,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
             if (connection != null) {
                 connection.close();
             }
-            connection = DriverManager.getConnection("jdbc:postgresql://10.211.55.6:5432/" + databaseName, userName,
+            connection = DriverManager.getConnection("jdbc:postgresql://10.211.55.6:5432/" + databaseName + "?loggerLevel=OFF", userName,
                     password);
         } catch (SQLException e) {
             connection = null;
