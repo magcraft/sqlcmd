@@ -9,6 +9,8 @@ import ua.com.juja.model.DatabaseManager;
 import ua.com.juja.view.View;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class FindTest {
 
@@ -22,7 +24,7 @@ public class FindTest {
     }
 
     @Test
-    public void testFind() {
+    public void testFindWithData() {
         //given
         Command command = new Find(manager, view);
         Mockito.when(manager.getTableColumns("users")).thenReturn(new String[] {"id", "name", "pass"});
@@ -50,4 +52,58 @@ public class FindTest {
 
     }
 
+    @Test
+    public void testFindWithoutData() {
+        //given
+        Command command = new Find(manager, view);
+        Mockito.when(manager.getTableColumns("users")).thenReturn(new String[] {"id", "name", "pass"});
+
+        DataSet[] data = new DataSet[0];
+        Mockito.when(manager.getTableData("users")).thenReturn(data);
+
+        //when
+        command.process("find|users");
+
+        //then
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        Mockito.verify(view, Mockito.atLeastOnce()).write(captor.capture());
+        assertEquals("[|id\t|name\t|pass\t|]", captor.getAllValues().toString());
+
+    }
+
+    @Test
+    public void testCanProcessFindString() {
+        //given
+        Command command = new Find(manager, view);
+
+        //when
+        boolean canProcess = command.canProcess("find|users");
+
+        //then
+        assertTrue(canProcess);
+    }
+
+    @Test
+    public void testCanNotProcessNotFindString() {
+        //given
+        Command command = new Find(manager, view);
+
+        //when
+        boolean canProcess = command.canProcess("finsdddc");
+
+        //then
+        assertFalse(canProcess);
+    }
+
+    @Test
+    public void testCanNotProcessQweString() {
+        //given
+        Command command = new Find(manager, view);
+
+        //when
+        boolean canProcess = command.canProcess("qwe|users");
+
+        //then
+        assertFalse(canProcess);
+    }
 }
