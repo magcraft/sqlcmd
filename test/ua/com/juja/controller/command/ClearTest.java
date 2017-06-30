@@ -6,8 +6,7 @@ import org.mockito.Mockito;
 import ua.com.juja.model.DatabaseManager;
 import ua.com.juja.view.View;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ClearTest {
 
@@ -49,13 +48,15 @@ public class ClearTest {
         assertFalse(canProcess);
     }
 
-//    @Test
-//    public void testCanNotProcessFindWithUnexpectedParametersString() {
-//        //when
-//        command.process("clear|users|qwe");
-//
-//        //then
-//        Mockito.verify(view).write(new IllegalArgumentException("Wrong arguments, expected 2, separated by symbol '|' but was: 3").toString());
-//    }
+    @Test
+    public void testCanNotProcessFindWithUnexpectedParametersString() {
+        //when
+        try {
+            command.process("clear|users|qwe");
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals("Wrong arguments, expected 2, separated by symbol '|' but was: 3", e.getMessage());
+        }
+    }
 
 }
