@@ -1,17 +1,21 @@
 package ua.com.juja.controller.command;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class ExitTest {
     private FakeView view = new FakeView();
+    private Command command;
+
+    @Before
+    public void setup() {
+        command = new Exit(view);
+    }
 
     @Test
     public void testCanProcessExitString() {
-        //given
-        Command command = new Exit(view);
-
         //when
         boolean canProcess = command.canProcess("exit");
 
@@ -21,9 +25,6 @@ public class ExitTest {
 
     @Test
     public void testCanNotProcessQweString() {
-        //given
-        Command command = new Exit(view);
-
         //when
         boolean canProcess = command.canProcess("qwe");
 
@@ -33,9 +34,6 @@ public class ExitTest {
 
     @Test
     public void testProcessExitCommand_throwsExitException() {
-        //given
-        Command command = new Exit(view);
-
         //when
         try {
             command.process("exit");
