@@ -7,7 +7,6 @@ This README would normally document whatever steps are necessary to get your app
 * Quick summary
 This is my study project SQL console client
 * Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### How do I get set up? ###
 
