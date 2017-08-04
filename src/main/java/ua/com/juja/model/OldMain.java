@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Created by magcraft on 19/05/2017.
  */
-public class Main {
+public class OldMain {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         //connect to PostgreSQL
         Class.forName("org.postgresql.Driver");
