@@ -1,6 +1,4 @@
-package ua.com.juja.controller.command;
-
-import ua.com.juja.view.View;
+package ua.com.juja.view;
 
 public class FakeView implements View {
 

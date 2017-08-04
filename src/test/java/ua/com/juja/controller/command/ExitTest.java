@@ -2,6 +2,8 @@ package ua.com.juja.controller.command;
 
 import org.junit.Before;
 import org.junit.Test;
+import ua.com.juja.view.FakeView;
+
 
 import static org.junit.Assert.*;
 
