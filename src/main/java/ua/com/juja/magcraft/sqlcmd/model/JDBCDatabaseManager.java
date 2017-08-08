@@ -1,5 +1,7 @@
 package ua.com.juja.magcraft.sqlcmd.model;
 
+import ua.com.juja.magcraft.sqlcmd.controller.Configuration;
+
 import java.sql.*;
 import java.util.Arrays;
 
@@ -9,6 +11,17 @@ import java.util.Arrays;
 public class JDBCDatabaseManager implements DatabaseManager {
 
     private Connection connection;
+    private String driver;
+    private String address;
+    private String port;
+    private String loglevel;
+
+    public JDBCDatabaseManager(Configuration configuration) {
+        this.driver = configuration.GetDatabaseDriver();
+        this.address = configuration.GetServerName();
+        this.port = configuration.GetDatabasePort();
+        this.loglevel = configuration.GetConnectionLogLevel();
+    }
 
     @Override
     public DataSet[] getTableData(String tableName) {
@@ -86,14 +99,16 @@ public class JDBCDatabaseManager implements DatabaseManager {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Please add JDBC jar driver to project!", e);
-//            System.out.println("Please add JDBC jar driver to project!");
-//            e.printStackTrace();
         }
         try {
             if (connection != null) {
                 connection.close();
             }
-            connection = DriverManager.getConnection("jdbc:postgresql://10.211.55.6:5432/" + databaseName + "?loggerLevel=OFF", userName,
+            // TODO: 08/08/2017 Add properties connection data 
+            connection = DriverManager.getConnection(driver + address + ":" + port + "/" +
+                    databaseName +
+                    loglevel,
+                    userName,
                     password);
         } catch (SQLException e) {
             connection = null;
@@ -132,8 +147,8 @@ public class JDBCDatabaseManager implements DatabaseManager {
     @Override
     public void update(String tableName, int id, DataSet input) {
         String updateCondition = getNamesFromated(input, "%s = ?,");
-        try (PreparedStatement stmt = connection.prepareStatement("UPDATE public." + tableName + " SET " + updateCondition +
-                " WHERE id = ?")) {
+        try (PreparedStatement stmt = connection.prepareStatement("UPDATE public." + tableName + " SET " +
+                updateCondition + " WHERE id = ?")) {
 //          PreparedStatement ps = connection.prepareStatement("UPDATE public.users SET pass = ? WHERE id > 2");
             int index = 1;
             for (Object value : input.getValues()) {

@@ -2,6 +2,7 @@ package ua.com.juja.magcraft.sqlcmd.model;
 
 import org.junit.Before;
 import org.junit.Test;
+import ua.com.juja.magcraft.sqlcmd.controller.Configuration;
 
 import java.util.Arrays;
 
@@ -14,8 +15,9 @@ public abstract class DatabaseManagerTest {
 
     @Before
     public void setup() {
+        Configuration configuration = new Configuration();
         manager = getDatabaseManager();
-        manager.connect("SQLCMD", "postgres", "buh1762");
+        manager.connect(configuration.GetDatabaseName(), configuration.GetDatabaseUserName(), configuration.GetDatabaseUserPassword());
     }
 
     public abstract DatabaseManager getDatabaseManager();

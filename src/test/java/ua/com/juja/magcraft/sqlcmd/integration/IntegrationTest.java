@@ -2,6 +2,7 @@ package ua.com.juja.magcraft.sqlcmd.integration;
 
 import org.junit.Before;
 import org.junit.Test;
+import ua.com.juja.magcraft.sqlcmd.controller.Configuration;
 import ua.com.juja.magcraft.sqlcmd.controller.Main;
 
 import java.io.ByteArrayOutputStream;
@@ -14,12 +15,16 @@ public class IntegrationTest {
 
     private ConfigurableInputStream in;
     private ByteArrayOutputStream out;
+    private Configuration configuration;
+    private String connectionString;
 
     @Before
     public void setup() {
         in = new ConfigurableInputStream();
         out = new ByteArrayOutputStream();
-
+        configuration = new Configuration();
+        connectionString = "connect|" + configuration.GetDatabaseName() +
+                "|" + configuration.GetDatabaseUserName() + "|" + configuration.GetDatabaseUserPassword();
         System.setIn(in);
         System.setOut(new PrintStream(out));
     }
@@ -128,7 +133,7 @@ public class IntegrationTest {
     @Test
     public void testUnsupportedAfterConnect() {
         //given
-        in.add("connect|SQLCMD|postgres|buh1762");
+        in.add(connectionString);
         in.add("unsupported");
         in.add("exit");
         //when
@@ -147,7 +152,7 @@ public class IntegrationTest {
     @Test
     public void testListAfterConnect() {
         //given
-        in.add("connect|SQLCMD|postgres|buh1762");
+        in.add(connectionString);
         in.add("list");
         in.add("exit");
         //when
@@ -166,7 +171,7 @@ public class IntegrationTest {
     @Test
     public void testFindAfterConnect() {
         //given
-        in.add("connect|SQLCMD|postgres|buh1762");
+        in.add(connectionString);
         in.add("clear|users");
         in.add("create|users|id|35|name|Andy|pass|realypass");
         in.add("create|users|id|36|name|Sandy|pass|ghdgashdfhsdf");
@@ -196,9 +201,10 @@ public class IntegrationTest {
     @Test
     public void testConnectAfterConnect() {
         //given
-        in.add("connect|SQLCMD|postgres|buh1762");
+        in.add(connectionString);
         in.add("list");
-        in.add("connect|test|postgres|buh1762");
+        //тут используется подключение к другой базе данных которая называется "test" с фиксироваными значениями в таблице
+        in.add("connect|test|" + configuration.GetDatabaseUserName() + "|" + configuration.GetDatabaseUserPassword());
         in.add("list");
         in.add("exit");
         //when
@@ -238,7 +244,7 @@ public class IntegrationTest {
     @Test
     public void testFindWithErrorInCommand() {
         //given
-        in.add("connect|SQLCMD|postgres|buh1762");
+        in.add(connectionString);
         in.add("find|");
         in.add("exit");
         //when
@@ -257,7 +263,7 @@ public class IntegrationTest {
     @Test
     public void testClear() {
         //given
-        in.add("connect|SQLCMD|postgres|buh1762");
+        in.add(connectionString);
         in.add("clear|users");
         in.add("exit");
         //when
@@ -276,7 +282,7 @@ public class IntegrationTest {
     @Test
     public void testClearWithError() {
         //given
-        in.add("connect|SQLCMD|postgres|buh1762");
+        in.add(connectionString);
         in.add("clear|");
         in.add("exit");
         //when
@@ -296,7 +302,7 @@ public class IntegrationTest {
     @Test
     public void testCreateWithError() {
         //given
-        in.add("connect|SQLCMD|postgres|buh1762");
+        in.add(connectionString);
         in.add("create|users|errorMessage");
         in.add("exit");
         //when

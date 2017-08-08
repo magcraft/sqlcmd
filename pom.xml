@@ -5,11 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <module.name>sqlcmd</module.name>
-    </properties>    
+    </properties>
 
     <groupId>ua.com.juja.magcraft</groupId>
-    <artifactId>${module.name}</artifactId>
+    <artifactId>sqlcmd</artifactId>
     <version>0.0.15b</version>
 
     <dependencies>
@@ -49,5 +50,20 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+            </plugin>
+        </plugins>
     </build>
 </project>
