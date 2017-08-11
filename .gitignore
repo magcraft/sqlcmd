@@ -27,4 +27,6 @@ hs_err_pid*
 
 #output Directory
 target/
+production/
 
+dependency-reduced-pom.xml

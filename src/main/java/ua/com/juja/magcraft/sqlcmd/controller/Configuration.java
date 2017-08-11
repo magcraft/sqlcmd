@@ -1,6 +1,8 @@
 package ua.com.juja.magcraft.sqlcmd.controller;
 
-import java.io.InputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 public class Configuration {
@@ -8,14 +10,21 @@ public class Configuration {
     public final String fileName = "config/sqlcmd.properties";
 
     public Configuration() {
+        FileInputStream fileInput = null;
+        properties = new Properties();
+        File file = new File(fileName);
         try {
-            properties = new Properties();
-            InputStream is = Main.class.getClassLoader().getResourceAsStream(fileName);
-            properties.load(is);
-            is.close();
+            fileInput = new FileInputStream(file);
+            properties.load(fileInput);
         } catch (Exception e) {
-            System.out.println("Config was loading with error: " + fileName);
+            System.out.println("Config was loading with error: " + file.getAbsolutePath());
             e.printStackTrace();
+        } finally {
+            if (fileInput != null) try {
+                fileInput.close();
+            } catch (IOException e) {
+                //do nothing
+            }
         }
     }
 

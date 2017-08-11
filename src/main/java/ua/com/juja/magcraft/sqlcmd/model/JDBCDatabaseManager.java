@@ -1,7 +1,6 @@
 package ua.com.juja.magcraft.sqlcmd.model;
 
 import ua.com.juja.magcraft.sqlcmd.controller.Configuration;
-
 import java.sql.*;
 import java.util.Arrays;
 
@@ -76,10 +75,10 @@ public class JDBCDatabaseManager implements DatabaseManager {
     @Override
     public String[] getTableNames() {
         try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE'"))
+             ResultSet rs = stmt.executeQuery("SELECT table_name FROM information_schema.tables " +
+                     "WHERE table_schema = 'public' AND table_type = 'BASE TABLE'"))
         {
             int countTables = getCountTables();
-
             String[] tables = new String[countTables];
             int index = 0;
             while (rs.next()) {
