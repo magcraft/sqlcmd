@@ -103,7 +103,6 @@ public class JDBCDatabaseManager implements DatabaseManager {
             if (connection != null) {
                 connection.close();
             }
-            // TODO: 08/08/2017 Add properties connection data 
             connection = DriverManager.getConnection(driver + address + ":" + port + "/" +
                     databaseName +
                     loglevel,
@@ -112,8 +111,8 @@ public class JDBCDatabaseManager implements DatabaseManager {
         } catch (SQLException e) {
             connection = null;
             throw new RuntimeException(
-                    String.format("Can't get connection to the database: %s, user: %s",
-                            databaseName, userName),
+                    String.format("Can't get connection to the server: '%s', database: '%s', user: '%s'",
+                            address, databaseName, userName),
                     e);
         }
     }
