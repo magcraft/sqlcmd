@@ -59,10 +59,10 @@ public class MainController {
     }
 
     private void printError(Exception e) {
-        String message = /*e.getClass().getSimpleName() + ": " +*/ e.getMessage();
+        String message = e.getMessage();
         Throwable cause = e.getCause();
         if (cause != null) {
-            message += " " + /*cause.getClass().getSimpleName() + ": " +*/ e.getCause().getMessage();
+            message += " " + e.getCause().getMessage();
         }
         view.write("Operation failed: " + message);
         view.write("Try again.");

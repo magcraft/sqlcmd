@@ -5,12 +5,11 @@ import ua.com.juja.magcraft.sqlcmd.view.View;
 
 public class Clear implements Command {
 
-    private static String COMMAND_SAMPLE = "clear|DataBaseTableName";
+    private static String COMMAND_SAMPLE = "clear|TableName";
     private DatabaseManager manager;
     private View view;
 
     public Clear(DatabaseManager manager, View view) {
-
         this.manager = manager;
         this.view = view;
     }
@@ -30,6 +29,6 @@ public class Clear implements Command {
         }
         String tableName = data[1];
         manager.clear(tableName);
-        view.write(String.format("Table '%s' sucsessfully cleared", tableName));
+        view.write(String.format("Table '%s' successfully cleared", tableName));
     }
 }

@@ -20,7 +20,6 @@ public class ExitTest {
     public void testCanProcessExitString() {
         //when
         boolean canProcess = command.canProcess("exit");
-
         //then
         assertTrue(canProcess);
     }
@@ -29,7 +28,6 @@ public class ExitTest {
     public void testCanNotProcessQweString() {
         //when
         boolean canProcess = command.canProcess("qwe");
-
         //then
         assertFalse(canProcess);
     }
@@ -41,12 +39,10 @@ public class ExitTest {
             command.process("exit");
             fail("Expected ExitException");
         } catch (ExitException e) {
-            //do nothing
+            //then
+            // throws ExitException
+            assertEquals("Good luck\n", view.getContent());
         }
-
-        //then
-        assertEquals("Good luck\n", view.getContent());
-        //throws ExitException
     }
 
 }

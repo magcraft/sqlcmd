@@ -13,13 +13,13 @@ public class JDBCDatabaseManager implements DatabaseManager {
     private String driver;
     private String address;
     private String port;
-    private String loglevel;
+    private String logLevel;
 
     public JDBCDatabaseManager(Configuration configuration) {
         this.driver = configuration.GetDatabaseDriver();
         this.address = configuration.GetServerName();
         this.port = configuration.GetDatabasePort();
-        this.loglevel = configuration.GetConnectionLogLevel();
+        this.logLevel = configuration.GetConnectionLogLevel();
     }
 
     @Override
@@ -105,7 +105,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
             }
             connection = DriverManager.getConnection(driver + address + ":" + port + "/" +
                     databaseName +
-                    loglevel,
+                    logLevel,
                     userName,
                     password);
         } catch (SQLException e) {
@@ -121,7 +121,6 @@ public class JDBCDatabaseManager implements DatabaseManager {
     public void clear(String tableName) {
         try (Statement stmt = connection.createStatement()){
             stmt.executeUpdate("DELETE FROM public." + tableName);
-//            stmt.executeUpdate("DELETE FROM public.users WHERE id > 12");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -132,8 +131,8 @@ public class JDBCDatabaseManager implements DatabaseManager {
         String fieldNames = "";
         String values = "";
         try (Statement stmt = connection.createStatement()) {
-            fieldNames = getNamesFromated(input, "%s,");
-            values = getValuesFormated(input, "'%s',");
+            fieldNames = getNamesFormatted(input, "%s,");
+            values = getValuesFormatted(input, "'%s',");
             stmt.executeUpdate("INSERT INTO public." + tableName + " (" + fieldNames + ")"+
                     "VALUES (" + values + ")");
         } catch (SQLException e) {
@@ -144,10 +143,9 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public void update(String tableName, int id, DataSet input) {
-        String updateCondition = getNamesFromated(input, "%s = ?,");
+        String updateCondition = getNamesFormatted(input, "%s = ?,");
         try (PreparedStatement stmt = connection.prepareStatement("UPDATE public." + tableName + " SET " +
                 updateCondition + " WHERE id = ?")) {
-//          PreparedStatement ps = connection.prepareStatement("UPDATE public.users SET pass = ? WHERE id > 2");
             int index = 1;
             for (Object value : input.getValues()) {
                 stmt.setObject(index++, value);
@@ -198,7 +196,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
         }
     }
 
-    private String getNamesFromated(DataSet input, String format) {
+    private String getNamesFormatted(DataSet input, String format) {
         String updateCondition = "";
         for (String name : input.getNames()) {
             updateCondition += String.format(format, name);
@@ -207,7 +205,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
         return updateCondition;
     }
 
-    private String getValuesFormated(DataSet input, String format) {
+    private String getValuesFormatted(DataSet input, String format) {
         String values = "";
         for (Object value : input.getValues()) {
             values += String.format(format, value);

@@ -13,15 +13,12 @@ public class ConfigurableInputStream extends InputStream {
         if (line.length() == 0) {
             return -1;
         }
-
         if (endLine) {
             endLine = false;
             return -1;
         }
-
         char ch = line.charAt(0);
         line = line.substring(1);
-
         if (ch == '\n') {
             endLine = true;
         }
@@ -35,5 +32,4 @@ public class ConfigurableInputStream extends InputStream {
             this.line += "\n" + line;
         }
     }
-
 }

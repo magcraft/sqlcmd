@@ -142,7 +142,7 @@ public class IntegrationTest {
         assertEquals("Welcome back!\n" +
                 "If you're going to connect to the database.\n" +
                 "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've succesfully connected!\n" +
+                "You've successfully connected!\n" +
                 "Get your command or 'help' for information:\n" +
                 "command 'unsupported' does not exist\n" +
                 "Get your command or 'help' for information:\n" +
@@ -161,7 +161,7 @@ public class IntegrationTest {
         assertEquals("Welcome back!\n" +
                 "If you're going to connect to the database.\n" +
                 "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've succesfully connected!\n" +
+                "You've successfully connected!\n" +
                 "Get your command or 'help' for information:\n" +
                 "[users]\n" +
                 "Get your command or 'help' for information:\n" +
@@ -183,9 +183,9 @@ public class IntegrationTest {
         assertEquals("Welcome back!\n" +
                 "If you're going to connect to the database.\n" +
                 "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've succesfully connected!\n" +
+                "You've successfully connected!\n" +
                 "Get your command or 'help' for information:\n" +
-                "Table 'users' sucsessfully cleared\n" +
+                "Table 'users' successfully cleared\n" +
                 "Get your command or 'help' for information:\n" +
                 "A row: '{names: [id, name, pass], values: [35, Andy, realypass]}' was add to the table 'users'\n" +
                 "Get your command or 'help' for information:\n" +
@@ -213,11 +213,11 @@ public class IntegrationTest {
         assertEquals("Welcome back!\n" +
                 "If you're going to connect to the database.\n" +
                 "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've succesfully connected!\n" +
+                "You've successfully connected!\n" +
                 "Get your command or 'help' for information:\n" +
                 "[users]\n" +
                 "Get your command or 'help' for information:\n" +
-                "You've succesfully connected!\n" +
+                "You've successfully connected!\n" +
                 "Get your command or 'help' for information:\n" +
                 "[test]\n" +
                 "Get your command or 'help' for information:\n" +
@@ -253,7 +253,7 @@ public class IntegrationTest {
         assertEquals("Welcome back!\n" +
                 "If you're going to connect to the database.\n" +
                 "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've succesfully connected!\n" +
+                "You've successfully connected!\n" +
                 "Get your command or 'help' for information:\n" +
                 "command find requires a parameter after '|' table name, like a find|tableName\n" +
                 "Get your command or 'help' for information:\n" +
@@ -272,9 +272,9 @@ public class IntegrationTest {
         assertEquals("Welcome back!\n" +
                 "If you're going to connect to the database.\n" +
                 "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've succesfully connected!\n" +
+                "You've successfully connected!\n" +
                 "Get your command or 'help' for information:\n" +
-                "Table 'users' sucsessfully cleared\n" +
+                "Table 'users' successfully cleared\n" +
                 "Get your command or 'help' for information:\n" +
                 "Good luck\n", getData());
     }
@@ -291,7 +291,7 @@ public class IntegrationTest {
         assertEquals("Welcome back!\n" +
                 "If you're going to connect to the database.\n" +
                 "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've succesfully connected!\n" +
+                "You've successfully connected!\n" +
                 "Get your command or 'help' for information:\n" +
                 "Operation failed: Wrong arguments, expected 2, separated by symbol '|' but was: 1\n" +
                 "Try again.\n" +
@@ -311,12 +311,11 @@ public class IntegrationTest {
         assertEquals("Welcome back!\n" +
                 "If you're going to connect to the database.\n" +
                 "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've succesfully connected!\n" +
+                "You've successfully connected!\n" +
                 "Get your command or 'help' for information:\n" +
                 "Operation failed: There have to even numbers of arguments 'create|TableName|column1|value1|...|columnN|valueN' but was: 'create|users|errorMessage'\n" +
                 "Try again.\n" +
                 "Get your command or 'help' for information:\n" +
                 "Good luck\n", getData());
     }
-
 }

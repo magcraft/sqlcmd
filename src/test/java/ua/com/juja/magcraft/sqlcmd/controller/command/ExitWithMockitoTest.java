@@ -13,10 +13,8 @@ public class ExitWithMockitoTest {
     public void testCanProcessExitString() {
         //given
         Command command = new Exit(view);
-
         //when
         boolean canProcess = command.canProcess("exit");
-
         //then
         assertTrue(canProcess);
     }
@@ -25,10 +23,8 @@ public class ExitWithMockitoTest {
     public void testCanNotProcessQweString() {
         //given
         Command command = new Exit(view);
-
         //when
         boolean canProcess = command.canProcess("qwe");
-
         //then
         assertFalse(canProcess);
     }
@@ -37,18 +33,13 @@ public class ExitWithMockitoTest {
     public void testProcessExitCommand_throwsExitException() {
         //given
         Command command = new Exit(view);
-
         //when
         try {
             command.process("exit");
             fail("Expected ExitException");
         } catch (ExitException e) {
-            //do nothing
+            //then
+            Mockito.verify(view).write("Good luck");
         }
-
-        //then
-        Mockito.verify(view).write("Good luck");
-
     }
-
 }

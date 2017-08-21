@@ -8,9 +8,7 @@ import ua.com.juja.magcraft.sqlcmd.model.DataSet;
 import ua.com.juja.magcraft.sqlcmd.model.DatabaseManager;
 import ua.com.juja.magcraft.sqlcmd.view.View;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class FindTest {
 
@@ -35,14 +33,8 @@ public class FindTest {
     public void testFindWithData() {
         //given
         Mockito.when(manager.getTableColumns("users")).thenReturn(new String[] {"id", "name", "pass"});
-        DataSet userOne = new DataSet();
-        userOne.put("id", 1);
-        userOne.put("name", "Victor");
-        userOne.put("pass", "my_pass");
-        DataSet userTwo = new DataSet();
-        userTwo.put("id", 2);
-        userTwo.put("name", "Eva");
-        userTwo.put("pass", "-=-=-=-=");
+        DataSet userOne = putUser(1, "Victor", "my_pass");
+        DataSet userTwo = putUser(2, "Eva", "-=-=-=-=");
         DataSet[] data = new DataSet[] {userOne, userTwo};
         Mockito.when(manager.getTableData("users")).thenReturn(data);
         //when
@@ -51,6 +43,14 @@ public class FindTest {
         shouldPrint("[|id\t|name\t|pass\t|," +
                             " |1\t|Victor\t|my_pass\t|," +
                             " |2\t|Eva\t|-=-=-=-=\t|]");
+    }
+
+    private DataSet putUser(int id, String name, String pass) {
+        DataSet ourUser = new DataSet();
+        ourUser.put("id", id);
+        ourUser.put("name", name);
+        ourUser.put("pass", pass);
+        return ourUser;
     }
 
     @Test
@@ -121,10 +121,8 @@ public class FindTest {
     public void testCanNotProcessFindWithUnexpectedParametersString() {
         //when
         command.process("find|users|qwe");
-
         //then
         shouldPrint("[command find requires a parameter after '|' table name, like a find|tableName]");
 //        assertFalse(canProcess);
     }
-
 }

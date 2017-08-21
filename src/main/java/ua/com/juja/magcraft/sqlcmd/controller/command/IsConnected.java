@@ -20,6 +20,6 @@ public class IsConnected implements Command {
 
     @Override
     public void process(String command) {
-        view.write(String.format("You can not use comand: '%s' while you are not connected to the data base. For connection use command: 'connect'. ", command));
+        view.write(String.format("You can not use command: '%s' while you are not connected to the data base. For connection use command: 'connect'. ", command));
     }
 }

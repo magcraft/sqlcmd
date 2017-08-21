@@ -10,7 +10,7 @@
     </properties>
 
     <groupId>ua.com.juja.magcraft</groupId>
-    <artifactId>sqlcmd</artifactId>
+    <artifactId>${module.name}</artifactId>
     <version>0.0.15b</version>
 
     <dependencies>

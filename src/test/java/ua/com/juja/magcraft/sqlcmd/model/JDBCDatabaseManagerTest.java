@@ -8,5 +8,4 @@ public class JDBCDatabaseManagerTest extends DatabaseManagerTest {
     public DatabaseManager getDatabaseManager() {
         return new JDBCDatabaseManager(new Configuration());
     }
-
 }

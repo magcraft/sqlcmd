@@ -23,13 +23,11 @@ public class ClearTest {
 
     @Test
     public void testClearTable() {
-        //given
-
         //when
         command.process("clear|users");
         //then
         Mockito.verify(manager).clear("users");
-        Mockito.verify(view).write("Table 'users' sucsessfully cleared");
+        Mockito.verify(view).write("Table 'users' successfully cleared");
     }
 
     @Test

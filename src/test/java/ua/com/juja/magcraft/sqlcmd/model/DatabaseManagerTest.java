@@ -32,14 +32,12 @@ public abstract class DatabaseManagerTest {
     public void testGetTableData() {
         //given
         manager.clear("users");
-
         //when
         DataSet input = new DataSet();
         input.put("id", 9);
         input.put("name", "Pupkin");
         input.put("pass", "password");
         manager.create("users", input);
-
         //then
         DataSet[] users = manager.getTableData("users");
         assertEquals(1, users.length);
@@ -53,7 +51,6 @@ public abstract class DatabaseManagerTest {
     public void testGetColumnNames() {
         //given
         manager.clear("users");
-
         //when
         String[] columnNames = manager.getTableColumns("users");
         assertEquals("[id, name, pass]", Arrays.toString(columnNames));
@@ -63,13 +60,11 @@ public abstract class DatabaseManagerTest {
     public void testUpdateTableData() {
         //given
         manager.clear("users");
-
         DataSet input = new DataSet();
         input.put("id", 9);
         input.put("name", "Pupkin");
         input.put("pass", "password");
         manager.create("users", input);
-
         //when
         DataSet newValue = new DataSet();
         newValue.put("id", 9);

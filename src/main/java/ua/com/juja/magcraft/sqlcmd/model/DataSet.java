@@ -60,34 +60,13 @@ public class DataSet {
         return null;
     }
 
-    // TODO: 24/05/2017 выяснить как мы тут нарушили инкапсуляцию? 
+    // TODO: find out: how encapsulation was broken?
     public void updateFrom(DataSet input) {
         for (int index = 0; index < input.freeIndex; index++) {
             Data data = input.data[index];
             this.put(data.name, data.value);
         }
     }
-
-//    //более ресорсоемкая реализация метода для примера
-//    public void updateFrom(DataSet input) {
-//        String[] names = input.getNames();
-//        for (int index = 0; index < names.length; index++) {
-//            String name = names[index];
-//            Object value = input.get(name);
-//            this.put(name, value);
-//        }
-//    }
-//
-//    //более ресорсоемкая реализация метода второй вариант для примера
-//    public void updateFrom(DataSet input) {
-//        String[] names = input.getNames();
-//        Object[] values = input.getValues();
-//        for (int index = 0; index < names.length; index++) {
-//            String name = names[index];
-//            Object value = values[index];
-//            this.put(name, value);
-//        }
-//    }
 
     @Override
     public String toString() {
