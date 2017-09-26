@@ -5,7 +5,7 @@ This README would normally document whatever steps are necessary to get your app
 ### What is this repository for? ###
 
 * Quick summary
-  This is my study project SQL console client
+  This is my console SQL client project
 * Version
   beta
 
