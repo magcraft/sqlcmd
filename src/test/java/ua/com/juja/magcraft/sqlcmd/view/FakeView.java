@@ -4,11 +4,12 @@ public class FakeView implements View {
 
     private String messages = "";
     private String input = null;
+    private String goNewLine = System.getProperty("line.separator");
 
 
     @Override
     public void write(String message) {
-        messages += message + "\n";
+        messages += message + goNewLine;
     }
 
     @Override

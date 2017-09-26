@@ -7,6 +7,7 @@ public class ConfigurableInputStream extends InputStream {
 
     private String line;
     private boolean endLine = false;
+    private String goNewLine = System.getProperty("line.separator");
 
     @Override
     public int read() throws IOException {
@@ -29,7 +30,7 @@ public class ConfigurableInputStream extends InputStream {
         if (this.line == null) {
             this.line = line;
         } else {
-            this.line += "\n" + line;
+            this.line += goNewLine + line;
         }
     }
 }

@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 public class ExitTest {
     private FakeView view = new FakeView();
     private Command command;
+    private String goNewLine = System.getProperty("line.separator");
 
     @Before
     public void setup() {
@@ -41,7 +42,7 @@ public class ExitTest {
         } catch (ExitException e) {
             //then
             // throws ExitException
-            assertEquals("Good luck\n", view.getContent());
+            assertEquals("Good luck" + goNewLine, view.getContent());
         }
     }
 

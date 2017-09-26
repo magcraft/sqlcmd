@@ -17,6 +17,7 @@ public class IntegrationTest {
     private ByteArrayOutputStream out;
     private Configuration configuration;
     private String connectionString;
+    private String goNewLine = System.getProperty("line.separator");
 
     @Before
     public void setup() {
@@ -47,26 +48,26 @@ public class IntegrationTest {
         //when
         Main.main(new String [0]);
         //then
-        assertEquals("Welcome back!\n" +
-                "If you're going to connect to the database.\n" +
-                "Enter 'connect|dataBase|userName|password' please!\n" +
-                "Command list:\n" +
-                "\t- connect to the database.\n" +
-                "\t\t * Enter command 'connect|dataBase|userName|password' please!\n" +
-                "\t- exit:\n" +
-                "\t\t * close the application.\n" +
-                "\t- find|TableName\n" +
-                "\t\t * show content of the table. Which name is TableName\n" +
-                "\t- clear|TableName\n" +
-                "\t\t * clear content of the table. Which name is TableName\n" +
-                "\t- create|TableName|column1|value1|...|columnN|valueN\n" +
-                "\t\t * create new row in the table. Which name is TableName\n" +
-                "\t- list:\n" +
-                "\t\t * if you need to get list of tables in the database.\n" +
-                "\t- help\n" +
-                "\t\t * for this information message.\n" +
-                "Get your command or 'help' for information:\n" +
-                "Good luck\n", getData());
+        assertEquals("Welcome back!" + goNewLine +
+                "If you're going to connect to the database." + goNewLine +
+                "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
+                "Command list:" + goNewLine +
+                "\t- connect to the database." + goNewLine +
+                "\t\t * Enter command 'connect|dataBase|userName|password' please!" + goNewLine +
+                "\t- exit:" + goNewLine +
+                "\t\t * close the application." + goNewLine +
+                "\t- find|TableName" + goNewLine +
+                "\t\t * show content of the table. Which name is TableName" + goNewLine +
+                "\t- clear|TableName" + goNewLine +
+                "\t\t * clear content of the table. Which name is TableName" + goNewLine +
+                "\t- create|TableName|column1|value1|...|columnN|valueN" + goNewLine +
+                "\t\t * create new row in the table. Which name is TableName" + goNewLine +
+                "\t- list:" + goNewLine +
+                "\t\t * if you need to get list of tables in the database." + goNewLine +
+                "\t- help" + goNewLine +
+                "\t\t * for this information message." + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Good luck" + goNewLine, getData());
     }
 
     @Test
@@ -76,10 +77,10 @@ public class IntegrationTest {
         //when
         Main.main(new String [0]);
         //then
-        assertEquals("Welcome back!\n" +
-                "If you're going to connect to the database.\n" +
-                "Enter 'connect|dataBase|userName|password' please!\n" +
-                "Good luck\n", getData());
+        assertEquals("Welcome back!" + goNewLine +
+                "If you're going to connect to the database." + goNewLine +
+                "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
+                "Good luck" + goNewLine, getData());
     }
 
     @Test
@@ -90,12 +91,13 @@ public class IntegrationTest {
         //when
         Main.main(new String [0]);
         //then
-        assertEquals("Welcome back!\n" +
-                "If you're going to connect to the database.\n" +
-                "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You can not use comand: 'list' while you are not connected to the data base. For connection use command: 'connect'. \n" +
-                "Get your command or 'help' for information:\n" +
-                "Good luck\n", getData());
+        assertEquals("Welcome back!" + goNewLine +
+                "If you're going to connect to the database." + goNewLine +
+                "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
+                "You can not use command: 'list' while you are not connected to the data base. For connection use " +
+                "command: 'connect'. " + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Good luck" + goNewLine, getData());
     }
 
     @Test
@@ -106,12 +108,13 @@ public class IntegrationTest {
         //when
         Main.main(new String [0]);
         //then
-        assertEquals("Welcome back!\n" +
-                "If you're going to connect to the database.\n" +
-                "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You can not use comand: 'find|users' while you are not connected to the data base. For connection use command: 'connect'. \n" +
-                "Get your command or 'help' for information:\n" +
-                "Good luck\n", getData());
+        assertEquals("Welcome back!" + goNewLine +
+                "If you're going to connect to the database." + goNewLine +
+                "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
+                "You can not use command: 'find|users' while you are not connected to the data base. For connection " +
+                "use command: 'connect'. " + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Good luck" + goNewLine, getData());
     }
 
     @Test
@@ -122,12 +125,13 @@ public class IntegrationTest {
         //when
         Main.main(new String [0]);
         //then
-        assertEquals("Welcome back!\n" +
-                "If you're going to connect to the database.\n" +
-                "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You can not use comand: 'unsupported' while you are not connected to the data base. For connection use command: 'connect'. \n" +
-                "Get your command or 'help' for information:\n" +
-                "Good luck\n", getData());
+        assertEquals("Welcome back!" + goNewLine +
+                "If you're going to connect to the database." + goNewLine +
+                "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
+                "You can not use command: 'unsupported' while you are not connected to the data base. For connection " +
+                "use command: 'connect'. " + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Good luck" + goNewLine, getData());
     }
 
     @Test
@@ -139,14 +143,14 @@ public class IntegrationTest {
         //when
         Main.main(new String [0]);
         //then
-        assertEquals("Welcome back!\n" +
-                "If you're going to connect to the database.\n" +
-                "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've successfully connected!\n" +
-                "Get your command or 'help' for information:\n" +
-                "command 'unsupported' does not exist\n" +
-                "Get your command or 'help' for information:\n" +
-                "Good luck\n", getData());
+        assertEquals("Welcome back!" + goNewLine +
+                "If you're going to connect to the database." + goNewLine +
+                "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
+                "You've successfully connected!" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "command 'unsupported' does not exist" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Good luck" + goNewLine, getData());
     }
 
     @Test
@@ -158,14 +162,14 @@ public class IntegrationTest {
         //when
         Main.main(new String [0]);
         //then
-        assertEquals("Welcome back!\n" +
-                "If you're going to connect to the database.\n" +
-                "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've successfully connected!\n" +
-                "Get your command or 'help' for information:\n" +
-                "[users]\n" +
-                "Get your command or 'help' for information:\n" +
-                "Good luck\n", getData());
+        assertEquals("Welcome back!" + goNewLine +
+                "If you're going to connect to the database." + goNewLine +
+                "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
+                "You've successfully connected!" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "[users]" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Good luck" + goNewLine, getData());
     }
 
     @Test
@@ -180,22 +184,22 @@ public class IntegrationTest {
         //when
         Main.main(new String [0]);
         //then
-        assertEquals("Welcome back!\n" +
-                "If you're going to connect to the database.\n" +
-                "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've successfully connected!\n" +
-                "Get your command or 'help' for information:\n" +
-                "Table 'users' successfully cleared\n" +
-                "Get your command or 'help' for information:\n" +
-                "A row: '{names: [id, name, pass], values: [35, Andy, realypass]}' was add to the table 'users'\n" +
-                "Get your command or 'help' for information:\n" +
-                "A row: '{names: [id, name, pass], values: [36, Sandy, ghdgashdfhsdf]}' was add to the table 'users'\n" +
-                "Get your command or 'help' for information:\n" +
-                "|id\t|name\t|pass\t|\n" +
-                "|35\t|Andy\t|realypass\t|\n" +
-                "|36\t|Sandy\t|ghdgashdfhsdf\t|\n" +
-                "Get your command or 'help' for information:\n" +
-                "Good luck\n", getData());
+        assertEquals("Welcome back!" + goNewLine +
+                "If you're going to connect to the database." + goNewLine +
+                "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
+                "You've successfully connected!" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Table 'users' successfully cleared" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "A row: '{names: [id, name, pass], values: [35, Andy, realypass]}' was add to the table 'users'" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "A row: '{names: [id, name, pass], values: [36, Sandy, ghdgashdfhsdf]}' was add to the table 'users'" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "|id\t|name\t|pass\t|" + goNewLine +
+                "|35\t|Andy\t|realypass\t|" + goNewLine +
+                "|36\t|Sandy\t|ghdgashdfhsdf\t|" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Good luck" + goNewLine, getData());
     }
 
     @Test
@@ -210,18 +214,18 @@ public class IntegrationTest {
         //when
         Main.main(new String [0]);
         //then
-        assertEquals("Welcome back!\n" +
-                "If you're going to connect to the database.\n" +
-                "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've successfully connected!\n" +
-                "Get your command or 'help' for information:\n" +
-                "[users]\n" +
-                "Get your command or 'help' for information:\n" +
-                "You've successfully connected!\n" +
-                "Get your command or 'help' for information:\n" +
-                "[test]\n" +
-                "Get your command or 'help' for information:\n" +
-                "Good luck\n", getData());
+        assertEquals("Welcome back!" + goNewLine +
+                "If you're going to connect to the database." + goNewLine +
+                "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
+                "You've successfully connected!" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "[users]" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "You've successfully connected!" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "[test]" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Good luck" + goNewLine, getData());
     }
 
     @Test
@@ -232,13 +236,13 @@ public class IntegrationTest {
         //when
         Main.main(new String [0]);
         //then
-        assertEquals("Welcome back!\n" +
-                "If you're going to connect to the database.\n" +
-                "Enter 'connect|dataBase|userName|password' please!\n" +
-                "Operation failed: Wrong arguments, expected 4, separated by symbol '|' but was: 2\n" +
-                "Try again.\n" +
-                "Get your command or 'help' for information:\n" +
-                "Good luck\n", getData());
+        assertEquals("Welcome back!" + goNewLine +
+                "If you're going to connect to the database." + goNewLine +
+                "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
+                "Operation failed: Wrong arguments, expected 4, separated by symbol '|' but was: 2" + goNewLine +
+                "Try again." + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Good luck" + goNewLine, getData());
     }
 
     @Test
@@ -250,14 +254,14 @@ public class IntegrationTest {
         //when
         Main.main(new String [0]);
         //then
-        assertEquals("Welcome back!\n" +
-                "If you're going to connect to the database.\n" +
-                "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've successfully connected!\n" +
-                "Get your command or 'help' for information:\n" +
-                "command find requires a parameter after '|' table name, like a find|tableName\n" +
-                "Get your command or 'help' for information:\n" +
-                "Good luck\n", getData());
+        assertEquals("Welcome back!" + goNewLine +
+                "If you're going to connect to the database." + goNewLine +
+                "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
+                "You've successfully connected!" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "command find requires a parameter after '|' table name, like a find|tableName" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Good luck" + goNewLine, getData());
     }
 
     @Test
@@ -269,14 +273,14 @@ public class IntegrationTest {
         //when
         Main.main(new String[0]);
         //then
-        assertEquals("Welcome back!\n" +
-                "If you're going to connect to the database.\n" +
-                "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've successfully connected!\n" +
-                "Get your command or 'help' for information:\n" +
-                "Table 'users' successfully cleared\n" +
-                "Get your command or 'help' for information:\n" +
-                "Good luck\n", getData());
+        assertEquals("Welcome back!" + goNewLine +
+                "If you're going to connect to the database." + goNewLine +
+                "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
+                "You've successfully connected!" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Table 'users' successfully cleared" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Good luck" + goNewLine, getData());
     }
 
     @Test
@@ -288,15 +292,15 @@ public class IntegrationTest {
         //when
         Main.main(new String[0]);
         //then
-        assertEquals("Welcome back!\n" +
-                "If you're going to connect to the database.\n" +
-                "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've successfully connected!\n" +
-                "Get your command or 'help' for information:\n" +
-                "Operation failed: Wrong arguments, expected 2, separated by symbol '|' but was: 1\n" +
-                "Try again.\n" +
-                "Get your command or 'help' for information:\n" +
-                "Good luck\n", getData());
+        assertEquals("Welcome back!" + goNewLine +
+                "If you're going to connect to the database." + goNewLine +
+                "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
+                "You've successfully connected!" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Operation failed: Wrong arguments, expected 2, separated by symbol '|' but was: 1" + goNewLine +
+                "Try again." + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Good luck" + goNewLine, getData());
     }
 
     @Test
@@ -308,14 +312,15 @@ public class IntegrationTest {
         //when
         Main.main(new String [0]);
         //then
-        assertEquals("Welcome back!\n" +
-                "If you're going to connect to the database.\n" +
-                "Enter 'connect|dataBase|userName|password' please!\n" +
-                "You've successfully connected!\n" +
-                "Get your command or 'help' for information:\n" +
-                "Operation failed: There have to even numbers of arguments 'create|TableName|column1|value1|...|columnN|valueN' but was: 'create|users|errorMessage'\n" +
-                "Try again.\n" +
-                "Get your command or 'help' for information:\n" +
-                "Good luck\n", getData());
+        assertEquals("Welcome back!" + goNewLine +
+                "If you're going to connect to the database." + goNewLine +
+                "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
+                "You've successfully connected!" + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Operation failed: There have to even numbers of arguments 'create|TableName|column1|value1|" +
+                "...|columnN|valueN' but was: 'create|users|errorMessage'" + goNewLine +
+                "Try again." + goNewLine +
+                "Get your command or 'help' for information:" + goNewLine +
+                "Good luck" + goNewLine, getData());
     }
 }
