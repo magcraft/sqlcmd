@@ -4,6 +4,8 @@ import ua.com.juja.magcraft.sqlcmd.model.DataSet;
 import ua.com.juja.magcraft.sqlcmd.model.DatabaseManager;
 import ua.com.juja.magcraft.sqlcmd.view.View;
 
+import java.util.Set;
+
 public class Find implements Command {
 
     private DatabaseManager manager;
@@ -29,7 +31,7 @@ public class Find implements Command {
         String tableName = data[1];
         if (tableName != null) {
             DataSet[] tableContents = manager.getTableData(tableName);
-            String[] tableColumns = manager.getTableColumns(tableName);
+            Set<String> tableColumns = manager.getTableColumns(tableName);
             printHeader(tableColumns);
             printTable(tableContents);
         }
@@ -50,7 +52,7 @@ public class Find implements Command {
         view.write(result);
     }
 
-    private void printHeader(String[] tableColumns) {
+    private void printHeader(Set<String> tableColumns) {
         String result = "|";
         for (String name : tableColumns) {
             result += name + "\t|";

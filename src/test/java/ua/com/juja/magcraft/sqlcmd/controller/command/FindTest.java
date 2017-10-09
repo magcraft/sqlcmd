@@ -8,6 +8,9 @@ import ua.com.juja.magcraft.sqlcmd.model.DataSet;
 import ua.com.juja.magcraft.sqlcmd.model.DatabaseManager;
 import ua.com.juja.magcraft.sqlcmd.view.View;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+
 import static org.junit.Assert.*;
 
 public class FindTest {
@@ -32,7 +35,7 @@ public class FindTest {
     @Test
     public void testFindWithData() {
         //given
-        Mockito.when(manager.getTableColumns("users")).thenReturn(new String[] {"id", "name", "pass"});
+        setupTableColumns("users", "id", "name", "pass");
         DataSet userOne = putUser(1, "Victor", "my_pass");
         DataSet userTwo = putUser(2, "Eva", "-=-=-=-=");
         DataSet[] data = new DataSet[] {userOne, userTwo};
@@ -43,6 +46,10 @@ public class FindTest {
         shouldPrint("[|id\t|name\t|pass\t|," +
                             " |1\t|Victor\t|my_pass\t|," +
                             " |2\t|Eva\t|-=-=-=-=\t|]");
+    }
+
+    private void setupTableColumns(String tableName, String... columns) {
+        Mockito.when(manager.getTableColumns(tableName)).thenReturn(new LinkedHashSet<String>(Arrays.asList(columns)));
     }
 
     private DataSet putUser(int id, String name, String pass) {
@@ -56,7 +63,7 @@ public class FindTest {
     @Test
     public void testFindWithoutData() {
         //given
-        Mockito.when(manager.getTableColumns("users")).thenReturn(new String[] {"id", "name", "pass"});
+        setupTableColumns("users", "id", "name", "pass");
         Mockito.when(manager.getTableData("users")).thenReturn(new DataSet[0]);
         //when
         command.process("find|users");
@@ -67,7 +74,7 @@ public class FindTest {
     @Test
     public void testFindWithoutDataWithOneColumn() {
         //given
-        Mockito.when(manager.getTableColumns("test")).thenReturn(new String[] {"id"});
+        setupTableColumns("test", "id");
         Mockito.when(manager.getTableData("test")).thenReturn(new DataSet[0]);
         //when
         command.process("find|test");
@@ -78,7 +85,7 @@ public class FindTest {
     @Test
     public void testFindWithDataOneColumn() {
         //given
-        Mockito.when(manager.getTableColumns("test")).thenReturn(new String[] {"id"});
+        setupTableColumns("test", "id");
         DataSet userOne = new DataSet();
         userOne.put("id", 1);
         DataSet userTwo = new DataSet();

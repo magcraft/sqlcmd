@@ -3,7 +3,6 @@ package ua.com.juja.magcraft.sqlcmd.model;
 import ua.com.juja.magcraft.sqlcmd.controller.Configuration;
 
 import java.sql.*;
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -160,22 +159,20 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public String[] getTableColumns(String tableName) {
+    public Set<String> getTableColumns(String tableName) {
         int countColumns = getCountColumns(tableName);
+        Set<String> tables = new LinkedHashSet<String>(countColumns);
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT column_name FROM information_schema.columns WHERE table_schema = 'public' AND table_name = '"
                      + tableName + "' ORDER BY ordinal_position"))
         {
-            String[] tables = new String[countColumns];
-            int index = 0;
             while (rs.next()) {
-                tables[index++] = rs.getString("column_name");
+                tables.add(rs.getString("column_name"));
             }
-            tables = Arrays.copyOf(tables, index, String[].class);
             return tables;
         } catch (SQLException e) {
             e.printStackTrace();
-            return new String[0];
+            return tables;
         }
     }
 
