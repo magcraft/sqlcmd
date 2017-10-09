@@ -62,7 +62,7 @@ public class IntegrationTest {
                 "\t\t * clear content of the table. Which name is TableName" + goNewLine +
                 "\t- create|TableName|column1|value1|...|columnN|valueN" + goNewLine +
                 "\t\t * create new row in the table. Which name is TableName" + goNewLine +
-                "\t- list:" + goNewLine +
+                "\t- tables:" + goNewLine +
                 "\t\t * if you need to get list of tables in the database." + goNewLine +
                 "\t- help" + goNewLine +
                 "\t\t * for this information message." + goNewLine +
@@ -86,7 +86,7 @@ public class IntegrationTest {
     @Test
     public void testListWithoutConnect() {
         //given
-        in.add("list");
+        in.add("tables");
         in.add("exit");
         //when
         Main.main(new String [0]);
@@ -94,7 +94,7 @@ public class IntegrationTest {
         assertEquals("Welcome back!" + goNewLine +
                 "If you're going to connect to the database." + goNewLine +
                 "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
-                "You can not use command: 'list' while you are not connected to the data base. For connection use " +
+                "You can not use command: 'tables' while you are not connected to the data base. For connection use " +
                 "command: 'connect'. " + goNewLine +
                 "Get your command or 'help' for information:" + goNewLine +
                 "Good luck" + goNewLine, getData());
@@ -157,7 +157,7 @@ public class IntegrationTest {
     public void testListAfterConnect() {
         //given
         in.add(connectionString);
-        in.add("list");
+        in.add("tables");
         in.add("exit");
         //when
         Main.main(new String [0]);
@@ -206,10 +206,10 @@ public class IntegrationTest {
     public void testConnectAfterConnect() {
         //given
         in.add(connectionString);
-        in.add("list");
+        in.add("tables");
         //тут используется подключение к другой базе данных которая называется "test" с фиксироваными значениями в таблице
         in.add("connect|test|" + configuration.GetDatabaseUserName() + "|" + configuration.GetDatabaseUserPassword());
-        in.add("list");
+        in.add("tables");
         in.add("exit");
         //when
         Main.main(new String [0]);

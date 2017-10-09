@@ -34,7 +34,7 @@ public class Help implements Command {
         view.write("\t- create|TableName|column1|value1|...|columnN|valueN");
         view.write("\t\t * create new row in the table. Which name is TableName");
 
-        view.write("\t- list:");
+        view.write("\t- tables:");
         view.write("\t\t * if you need to get list of tables in the database.");
 
         view.write("\t- help");

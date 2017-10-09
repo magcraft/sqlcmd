@@ -27,7 +27,7 @@ Uses PostgreSQL 9.1.9 on x86_64-unknown-linux-gnu, compiled by gcc (GCC) 4.1.1 2
 * find|TableName - show content of the table. Which name is TableName
 * clear|TableName - clear content of the table. Which name is TableName
 * create|TableName|column1|value1|...|columnN|valueN - create new row in the table. Which name is TableName
-* list - if you need to get list of tables in the database
+* tables - if you need to get list of tables in the database
 * help - supports comands information message
 
 ### Dependencies ###
