@@ -6,4 +6,8 @@ public interface Command {
 
     void process(String command);
 
+    //TODO создать методы для вывода формата комманды и описания
+//    String format();
+
+//    String description();
 }
