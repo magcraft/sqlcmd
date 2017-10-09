@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import ua.com.juja.magcraft.sqlcmd.model.DataSet;
+import ua.com.juja.magcraft.sqlcmd.model.DataSetImpl;
 import ua.com.juja.magcraft.sqlcmd.model.DatabaseManager;
 import ua.com.juja.magcraft.sqlcmd.view.View;
 
@@ -51,7 +52,7 @@ public class FindTest {
     }
 
     private DataSet putUser(int id, String name, String pass) {
-        DataSet ourUser = new DataSet();
+        DataSet ourUser = new DataSetImpl();
         ourUser.put("id", id);
         ourUser.put("name", name);
         ourUser.put("pass", pass);
@@ -62,7 +63,8 @@ public class FindTest {
     public void testFindWithoutData() {
         //given
         setupTableColumns("users", "id", "name", "pass");
-        Mockito.when(manager.getTableData("users")).thenReturn(new ArrayList<DataSet>());
+        Mockito.when(manager.getTableData("users"))
+                .thenReturn(new ArrayList<DataSet>());
         //when
         command.process("find|users");
         //then
@@ -73,7 +75,8 @@ public class FindTest {
     public void testFindWithoutDataWithOneColumn() {
         //given
         setupTableColumns("test", "id");
-        Mockito.when(manager.getTableData("test")).thenReturn(new ArrayList<DataSet>());
+        Mockito.when(manager.getTableData("test"))
+                .thenReturn(new ArrayList<DataSet>());
         //when
         command.process("find|test");
         //then
@@ -84,9 +87,9 @@ public class FindTest {
     public void testFindWithDataOneColumn() {
         //given
         setupTableColumns("test", "id");
-        DataSet userOne = new DataSet();
+        DataSet userOne = new DataSetImpl();
         userOne.put("id", 1);
-        DataSet userTwo = new DataSet();
+        DataSet userTwo = new DataSetImpl();
         userTwo.put("id", 2);
         Mockito.when(manager.getTableData("test")).thenReturn(Arrays.asList(userOne, userTwo));
         //when

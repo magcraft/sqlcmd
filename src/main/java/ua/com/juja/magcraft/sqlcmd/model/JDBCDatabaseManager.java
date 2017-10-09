@@ -32,7 +32,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
         {
             ResultSetMetaData rsmd = rs.getMetaData();
             while (rs.next()) {
-                DataSet dataSet = new DataSet();
+                DataSet dataSet = new DataSetImpl();
                 result.add(dataSet);
                 for (int i = 0; i < rsmd.getColumnCount(); i++) {
                     //i+1 Because JDBC Counts start from  1

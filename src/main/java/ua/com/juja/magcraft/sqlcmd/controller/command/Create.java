@@ -1,6 +1,7 @@
 package ua.com.juja.magcraft.sqlcmd.controller.command;
 
 import ua.com.juja.magcraft.sqlcmd.model.DataSet;
+import ua.com.juja.magcraft.sqlcmd.model.DataSetImpl;
 import ua.com.juja.magcraft.sqlcmd.model.DatabaseManager;
 import ua.com.juja.magcraft.sqlcmd.view.View;
 
@@ -24,7 +25,7 @@ public class Create implements Command {
         String[] data = command.split("\\|");
         int dataLength = data.length;
         String tableName = data[1];
-        DataSet dataSet = new DataSet();
+        DataSet dataSet = new DataSetImpl();
         if (data.length % 2 != 0) {
             throw new IllegalArgumentException(String.format("There have to even numbers of arguments 'create|TableName|column1|value1|...|columnN|valueN' but was: '%s'", command));
         }
