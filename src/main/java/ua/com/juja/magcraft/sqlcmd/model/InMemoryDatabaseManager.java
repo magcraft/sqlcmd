@@ -4,22 +4,21 @@ import java.util.*;
 
 public class InMemoryDatabaseManager implements DatabaseManager {
 
-    public static final String TABLE_NAME = "test, users";
-    private List<DataSet> data = new LinkedList<DataSet>();
+    private Map<String, List<DataSet>> tables = new LinkedHashMap<>();
 
     @Override
     public List<DataSet> getTableData(String tableName) {
-        return data;
+        return get(tableName);
     }
 
     @Override
     public int getSize(String tableName) {
-        return data.size();
+        return get(tableName).size();
     }
 
     @Override
     public Set<String> getTableNames() {
-        return new LinkedHashSet<String>(Arrays.asList(TABLE_NAME));
+        return tables.keySet();
     }
 
     @Override
@@ -29,17 +28,24 @@ public class InMemoryDatabaseManager implements DatabaseManager {
 
     @Override
     public void clear(String tableName) {
-        data.clear();
+        get(tableName).clear();
+    }
+
+    private List<DataSet> get(String tableName) {
+        if (!tables.containsKey(tableName)) {
+            tables.put(tableName, new LinkedList<DataSet>());
+        }
+        return tables.get(tableName);
     }
 
     @Override
     public void create(String tableName, DataSet input) {
-        data.add(input);
+        get(tableName).add(input);
     }
 
     @Override
     public void update(String tableName, int id, DataSet input) {
-        for (DataSet dataSet : data) {
+        for (DataSet dataSet : get(tableName)) {
             if (dataSet.get("id").equals(id)) {
                 dataSet.updateFrom(input);
             }
