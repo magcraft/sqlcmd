@@ -1,10 +1,12 @@
 package ua.com.juja.magcraft.sqlcmd.model;
 
 import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class InMemoryDatabaseManager implements DatabaseManager {
 
-    public static final String TABLE_NAME = "users";
+    public static final String TABLE_NAME = "test, users";
     private DataSet[] data = new DataSet[1000];
     private int freeIndex = 0;
 
@@ -14,8 +16,8 @@ public class InMemoryDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public String[] getTableNames() {
-        return new String[] {TABLE_NAME};
+    public Set<String> getTableNames() {
+        return new LinkedHashSet<String>(Arrays.asList(TABLE_NAME));
     }
 
     @Override

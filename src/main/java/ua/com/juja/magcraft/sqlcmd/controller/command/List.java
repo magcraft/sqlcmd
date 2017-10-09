@@ -3,7 +3,7 @@ package ua.com.juja.magcraft.sqlcmd.controller.command;
 import ua.com.juja.magcraft.sqlcmd.model.DatabaseManager;
 import ua.com.juja.magcraft.sqlcmd.view.View;
 
-import java.util.Arrays;
+import java.util.Set;
 
 public class List implements Command {
 
@@ -22,8 +22,8 @@ public class List implements Command {
 
     @Override
     public void process(String command) {
-        String[] tableNames = manager.getTableNames();
-        String message = Arrays.toString(tableNames);
+        Set<String> tableNames = manager.getTableNames();
+        String message = tableNames.toString();
         view.write(message);
     }
 }

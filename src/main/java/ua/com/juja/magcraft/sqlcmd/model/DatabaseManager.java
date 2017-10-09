@@ -1,10 +1,12 @@
 package ua.com.juja.magcraft.sqlcmd.model;
 
+import java.util.Set;
+
 public interface DatabaseManager {
 
     DataSet[] getTableData(String tableName);
 
-    String[] getTableNames();
+    Set<String> getTableNames();
 
     void connect(String databaseName, String userName, String password);
 

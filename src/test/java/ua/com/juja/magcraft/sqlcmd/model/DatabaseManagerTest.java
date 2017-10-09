@@ -5,6 +5,7 @@ import org.junit.Test;
 import ua.com.juja.magcraft.sqlcmd.controller.Configuration;
 
 import java.util.Arrays;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -24,8 +25,8 @@ public abstract class DatabaseManagerTest {
 
     @Test
     public void testGetAllTableNames() {
-        String[] tableNames = manager.getTableNames();
-        assertEquals("[users]", Arrays.toString(tableNames));
+        Set<String> tableNames = manager.getTableNames();
+        assertEquals("[test, users]", tableNames.toString());
     }
 
     @Test

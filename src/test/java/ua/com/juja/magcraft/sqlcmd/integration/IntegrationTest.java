@@ -167,7 +167,7 @@ public class IntegrationTest {
                 "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
                 "You've successfully connected!" + goNewLine +
                 "Get your command or 'help' for information:" + goNewLine +
-                "[users]" + goNewLine +
+                "[test, users]" + goNewLine +
                 "Get your command or 'help' for information:" + goNewLine +
                 "Good luck" + goNewLine, getData());
     }
@@ -219,7 +219,7 @@ public class IntegrationTest {
                 "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
                 "You've successfully connected!" + goNewLine +
                 "Get your command or 'help' for information:" + goNewLine +
-                "[users]" + goNewLine +
+                "[test, users]" + goNewLine +
                 "Get your command or 'help' for information:" + goNewLine +
                 "You've successfully connected!" + goNewLine +
                 "Get your command or 'help' for information:" + goNewLine +
