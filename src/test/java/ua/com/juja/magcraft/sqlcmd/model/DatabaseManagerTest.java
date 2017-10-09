@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.com.juja.magcraft.sqlcmd.controller.Configuration;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -45,8 +44,8 @@ public abstract class DatabaseManagerTest {
         assertEquals(1, users.size());
 
         DataSet user = users.get(0);
-        assertEquals("[id, name, pass]", Arrays.toString(user.getNames()));
-        assertEquals("[9, Pupkin, password]", Arrays.toString(user.getValues()));
+        assertEquals("[id, name, pass]", user.getNames().toString());
+        assertEquals("[9, Pupkin, password]", user.getValues().toString());
     }
 
     @Test
@@ -78,8 +77,8 @@ public abstract class DatabaseManagerTest {
         assertEquals(1, users.size());
 
         DataSet user = users.get(0);
-        assertEquals("[id, name, pass]", Arrays.toString(user.getNames()));
-        assertEquals("[9, Pupkina, password_@_1]", Arrays.toString(user.getValues()));
+        assertEquals("[id, name, pass]", user.getNames().toString());
+        assertEquals("[9, Pupkina, password_@_1]", user.getValues().toString());
     }
 
     @Test
