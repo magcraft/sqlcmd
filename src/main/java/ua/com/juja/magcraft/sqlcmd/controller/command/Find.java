@@ -9,6 +9,8 @@ import java.util.Set;
 
 public class Find implements Command {
 
+    private static String COMMAND_SAMPLE = "find|tableName";
+    private static int TABLE_NAME_INDEX = 1;
     private DatabaseManager manager;
     private View view;
 
@@ -24,12 +26,14 @@ public class Find implements Command {
 
     @Override
     public void process(String command) {
+        int count = COMMAND_SAMPLE.split("\\|").length;
         String[] data = command.split("\\|");
-        if (data.length != 2) {
-            view.write("command find requires a parameter after '|' table name, like a find|tableName");
+        if (data.length != count) {
+            view.write("command find requires a parameter after '|' table name, like a " + COMMAND_SAMPLE
+                    + ", but you wrote: " + command);
             return;
         }
-        String tableName = data[1];
+        String tableName = data[TABLE_NAME_INDEX];
         if (tableName != null) {
             List<DataSet> tableContents = manager.getTableData(tableName);
             Set<String> tableColumns = manager.getTableColumns(tableName);

@@ -129,7 +129,7 @@ public class FindTest {
         //when
         command.process("find|users|qwe");
         //then
-        shouldPrint("[command find requires a parameter after '|' table name, like a find|tableName]");
+        shouldPrint("[command find requires a parameter after '|' table name, like a find|tableName, but you wrote: find|users|qwe]");
 //        assertFalse(canProcess);
     }
 }

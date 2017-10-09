@@ -259,7 +259,8 @@ public class IntegrationTest {
                 "Enter 'connect|dataBase|userName|password' please!" + goNewLine +
                 "You've successfully connected!" + goNewLine +
                 "Get your command or 'help' for information:" + goNewLine +
-                "command find requires a parameter after '|' table name, like a find|tableName" + goNewLine +
+                "command find requires a parameter after '|' table name, like a find|tableName, " +
+                "but you wrote: find|" + goNewLine +
                 "Get your command or 'help' for information:" + goNewLine +
                 "Good luck" + goNewLine, getData());
     }
