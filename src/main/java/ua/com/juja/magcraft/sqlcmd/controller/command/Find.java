@@ -4,6 +4,7 @@ import ua.com.juja.magcraft.sqlcmd.model.DataSet;
 import ua.com.juja.magcraft.sqlcmd.model.DatabaseManager;
 import ua.com.juja.magcraft.sqlcmd.view.View;
 
+import java.util.List;
 import java.util.Set;
 
 public class Find implements Command {
@@ -30,14 +31,14 @@ public class Find implements Command {
         }
         String tableName = data[1];
         if (tableName != null) {
-            DataSet[] tableContents = manager.getTableData(tableName);
+            List<DataSet> tableContents = manager.getTableData(tableName);
             Set<String> tableColumns = manager.getTableColumns(tableName);
             printHeader(tableColumns);
             printTable(tableContents);
         }
     }
 
-    private void printTable(DataSet[] tableContents) {
+    private void printTable(List<DataSet> tableContents) {
         for (DataSet row : tableContents) {
             printRow(row);
         }

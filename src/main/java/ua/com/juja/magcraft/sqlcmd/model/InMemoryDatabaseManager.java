@@ -1,18 +1,15 @@
 package ua.com.juja.magcraft.sqlcmd.model;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 public class InMemoryDatabaseManager implements DatabaseManager {
 
     public static final String TABLE_NAME = "test, users";
-    private DataSet[] data = new DataSet[1000];
-    private int freeIndex = 0;
+    private List<DataSet> data = new LinkedList<DataSet>();
 
     @Override
-    public DataSet[] getTableData(String tableName) {
-        return Arrays.copyOf(data, freeIndex);
+    public List<DataSet> getTableData(String tableName) {
+        return data;
     }
 
     @Override
@@ -27,21 +24,19 @@ public class InMemoryDatabaseManager implements DatabaseManager {
 
     @Override
     public void clear(String tableName) {
-        data = new DataSet[1000];
-        freeIndex = 0;
+        data.clear();
     }
 
     @Override
     public void create(String tableName, DataSet input) {
-        data[freeIndex] = input;
-        freeIndex++;
+        data.add(input);
     }
 
     @Override
     public void update(String tableName, int id, DataSet input) {
-        for (int index = 0; index < freeIndex; index++) {
-            if (data[index].get("id").equals(id)) {
-                data[index].updateFrom(input);
+        for (DataSet dataSet : data) {
+            if (dataSet.get("id").equals(id)) {
+                dataSet.updateFrom(input);
             }
         }
     }

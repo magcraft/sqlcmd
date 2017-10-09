@@ -5,19 +5,19 @@ import ua.com.juja.magcraft.sqlcmd.view.View;
 
 import java.util.Set;
 
-public class List implements Command {
+public class Tables implements Command {
 
     private DatabaseManager manager;
     private View view;
 
-    public List(DatabaseManager manager, View view) {
+    public Tables(DatabaseManager manager, View view) {
         this.manager = manager;
         this.view = view;
     }
 
     @Override
     public boolean canProcess(String command) {
-        return command.equals("list");
+        return command.equals("list"); //TODO Replace list -> tables
     }
 
     @Override

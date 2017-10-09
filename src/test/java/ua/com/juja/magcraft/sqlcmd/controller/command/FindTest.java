@@ -8,8 +8,7 @@ import ua.com.juja.magcraft.sqlcmd.model.DataSet;
 import ua.com.juja.magcraft.sqlcmd.model.DatabaseManager;
 import ua.com.juja.magcraft.sqlcmd.view.View;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -38,8 +37,7 @@ public class FindTest {
         setupTableColumns("users", "id", "name", "pass");
         DataSet userOne = putUser(1, "Victor", "my_pass");
         DataSet userTwo = putUser(2, "Eva", "-=-=-=-=");
-        DataSet[] data = new DataSet[] {userOne, userTwo};
-        Mockito.when(manager.getTableData("users")).thenReturn(data);
+        Mockito.when(manager.getTableData("users")).thenReturn(Arrays.asList(userOne, userTwo));
         //when
         command.process("find|users");
         //then
@@ -64,7 +62,7 @@ public class FindTest {
     public void testFindWithoutData() {
         //given
         setupTableColumns("users", "id", "name", "pass");
-        Mockito.when(manager.getTableData("users")).thenReturn(new DataSet[0]);
+        Mockito.when(manager.getTableData("users")).thenReturn(new ArrayList<DataSet>());
         //when
         command.process("find|users");
         //then
@@ -75,7 +73,7 @@ public class FindTest {
     public void testFindWithoutDataWithOneColumn() {
         //given
         setupTableColumns("test", "id");
-        Mockito.when(manager.getTableData("test")).thenReturn(new DataSet[0]);
+        Mockito.when(manager.getTableData("test")).thenReturn(new ArrayList<DataSet>());
         //when
         command.process("find|test");
         //then
@@ -90,8 +88,7 @@ public class FindTest {
         userOne.put("id", 1);
         DataSet userTwo = new DataSet();
         userTwo.put("id", 2);
-        DataSet[] data = new DataSet[] {userOne, userTwo};
-        Mockito.when(manager.getTableData("test")).thenReturn(data);
+        Mockito.when(manager.getTableData("test")).thenReturn(Arrays.asList(userOne, userTwo));
         //when
         command.process("find|test");
         //then

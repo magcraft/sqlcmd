@@ -5,6 +5,7 @@ import org.junit.Test;
 import ua.com.juja.magcraft.sqlcmd.controller.Configuration;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -40,10 +41,10 @@ public abstract class DatabaseManagerTest {
         input.put("pass", "password");
         manager.create("users", input);
         //then
-        DataSet[] users = manager.getTableData("users");
-        assertEquals(1, users.length);
+        List<DataSet> users = manager.getTableData("users");
+        assertEquals(1, users.size());
 
-        DataSet user = users[0];
+        DataSet user = users.get(0);
         assertEquals("[id, name, pass]", Arrays.toString(user.getNames()));
         assertEquals("[9, Pupkin, password]", Arrays.toString(user.getValues()));
     }
@@ -73,10 +74,10 @@ public abstract class DatabaseManagerTest {
         newValue.put("pass", "password_@_1");
         manager.update("users",9, newValue);
 
-        DataSet[] users = manager.getTableData("users");
-        assertEquals(1, users.length);
+        List<DataSet> users = manager.getTableData("users");
+        assertEquals(1, users.size());
 
-        DataSet user = users[0];
+        DataSet user = users.get(0);
         assertEquals("[id, name, pass]", Arrays.toString(user.getNames()));
         assertEquals("[9, Pupkina, password_@_1]", Arrays.toString(user.getValues()));
     }
