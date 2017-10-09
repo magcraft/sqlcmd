@@ -7,6 +7,8 @@ public interface DatabaseManager {
 
     List<DataSet> getTableData(String tableName);
 
+    int getSize(String tableName);
+
     Set<String> getTableNames();
 
     void connect(String databaseName, String userName, String password);

@@ -13,6 +13,11 @@ public class InMemoryDatabaseManager implements DatabaseManager {
     }
 
     @Override
+    public int getSize(String tableName) {
+        return data.size();
+    }
+
+    @Override
     public Set<String> getTableNames() {
         return new LinkedHashSet<String>(Arrays.asList(TABLE_NAME));
     }
